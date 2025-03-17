@@ -154,9 +154,6 @@ namespace MasterCore8.Controllers.Example
                 await _context.tbbasic_crud.AddAsync(add);
                 await _context.SaveChangesAsync();
 
-                // gen code run no.
-                await tbbasic_crud.GenDocCode(_context, add.id, true);
-
                 transaction.Commit(); 
 
                 TempData["success"] = "Add Data Success";
