@@ -67,55 +67,6 @@ namespace MasterCore8.Models
         }
 
         // ======= Handle Method =============
-
-        public static async Task<string> GenDocCode(ApplicationDbContext context, string id, bool updatedata = false){
-            Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = null;
-            if(context.Database.CurrentTransaction != null){
-                transaction = null;
-            }else{
-                transaction = context.Database.BeginTransaction();
-                
-            }
-            using var _transaction = transaction;
-            try
-            {               
-                var mydata = await context.tbbasic_crud.FirstOrDefaultAsync(d=>d.id == id);
-                
-                //string[] statusActive = { "Preparing","Finished","Acknowledge", "Returned"  };
-                var max_run_no = await context.tbbasic_crud
-                    .Where(d=>d.category == mydata.category
-                        && EF.Functions.DateDiffYear(d.create_date, DateTime.Now) == 0)
-                    .AsNoTracking()
-                    .MaxAsync(d=>d.run_no);
-                    
-                var category = mydata.category;
-                var year = DateTime.Now.Year.ToString();
-                var max_run_no_txt = "";
-                var movie_code = "";
-                int _max_run_no = max_run_no != null ? Convert.ToInt16(max_run_no) + 1 : 1;
-                            
-                max_run_no_txt = _max_run_no.ToString().PadLeft(5,'0');
-                movie_code = $"{category}-{year}-{max_run_no_txt}";
-                
-                if(updatedata){
-                    mydata.movie_code = movie_code;
-                    mydata.run_no = _max_run_no;
-                    await context.SaveChangesAsync();
-                }
-                if(_transaction != null){
-                    transaction.Commit();
-                }
-                return movie_code;
-            }
-            catch (System.Exception)
-            {
-                if(_transaction == null){
-                    throw;
-                }
-                transaction.Rollback();
-                return "";
-            }
-
-        }
+        
     }
 }
