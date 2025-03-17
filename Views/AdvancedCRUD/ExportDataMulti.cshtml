@@ -1,0 +1,105 @@
+@model List<tbbasic_crud>
+@{
+    Layout = "_ExportExcel";
+}
+
+<table id="Data" class="teble-export" data-SheetName="Data" border="1">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center text-nowrap" style="min-width: 30px;width: 30px;">No.</th>
+            <th class="text-center text-nowrap">IMG</th>
+            <th class="text-center text-nowrap">Movie Code</th>
+            <th class="text-center text-nowrap">Title</th>
+            <th class="text-center text-nowrap">Category</th>
+            <th class="text-center text-nowrap">Detail</th>
+            <th class="text-center text-nowrap">Publish Date</th>
+            <th class="text-center text-nowrap">CreateBy</th>
+            <th class="text-center text-nowrap">CreateDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (index, item) in Model.Select((item,i)=>(i,item)))
+        {
+            <tr>
+                <th class="text-center text-nowrap">@(index + 1)</th>
+                <th class="text-center text-nowrap" style="width: 50px;height: 45px;">
+                    <img src="@Url.AbsoluteContent($"~/fileservice/fileUploads/{item.img}")" alt="BasicCRUDIMG" width="40" height="40" style="width: 40px;height:40px;">
+                </th>
+                <td class="text-center">@item.movie_code</td>
+                <td class="text-center">@item.title</td>
+                <td class="text-center">@item.category</td>
+                <td class="text-left">@Helper.StripHtmlTags(Helper.StringLimit(item.detail,50))</td>
+                <td class="text-center text-nowrap">@Helper.DateToString(item.publish_start_date) - @Helper.DateToString(item.publish_end_date)</td>
+                <td class="text-center">@item.create?.name</td>
+                <td class="text-center text-nowrap">@Helper.DateTimeToString(item.create_date)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table id="Data2" class="teble-export" data-SheetName="Data2" border="1">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center text-nowrap" style="min-width: 30px;width: 30px;">No.</th>
+            <th class="text-center text-nowrap">IMG</th>
+            <th class="text-center text-nowrap">Movie Code</th>
+            <th class="text-center text-nowrap">Title</th>
+            <th class="text-center text-nowrap">Category</th>
+            <th class="text-center text-nowrap">Detail</th>
+            <th class="text-center text-nowrap">Publish Date</th>
+            <th class="text-center text-nowrap">CreateBy</th>
+            <th class="text-center text-nowrap">CreateDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (index, item) in Model.Select((item,i)=>(i,item)))
+        {
+            <tr>
+                <th class="text-center text-nowrap">@(index + 1)</th>
+                <th class="text-center text-nowrap" style="width: 50px;height: 45px;">
+                    <img src="@Url.AbsoluteContent($"~/fileservice/fileUploads/{item.img}")" alt="BasicCRUDIMG" width="40" height="40" style="width: 40px;height:40px;">
+                </th>
+                <td class="text-center">@item.movie_code</td>
+                <td class="text-center">@item.title</td>
+                <td class="text-center">@item.category</td>
+                <td class="text-left">@Helper.StripHtmlTags(Helper.StringLimit(item.detail,50))</td>
+                <td class="text-center text-nowrap">@Helper.DateToString(item.publish_start_date,"th") - @Helper.DateToString(item.publish_end_date,"th")</td>
+                <td class="text-center">@item.create?.name</td>
+                <td class="text-center text-nowrap">@Helper.DateTimeToString(item.create_date,"th")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table id="sheet3" class="teble-export" data-SheetName="sheet3" border="1">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center text-nowrap" style="min-width: 30px;width: 30px;">No.</th>
+            <th class="text-center text-nowrap">IMG</th>
+            <th class="text-center text-nowrap">Movie Code</th>
+            <th class="text-center text-nowrap">Title</th>
+            <th class="text-center text-nowrap">Category</th>
+            <th class="text-center text-nowrap">Detail</th>
+            <th class="text-center text-nowrap">Publish Date</th>
+            <th class="text-center text-nowrap">CreateBy</th>
+            <th class="text-center text-nowrap">CreateDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (index, item) in Model.Select((item,i)=>(i,item)))
+        {
+            <tr>
+                <th class="text-center text-nowrap">@(index + 1)</th>
+                <th class="text-center text-nowrap" style="width: 50px;height: 45px;">
+                    <img src="@Url.AbsoluteContent($"~/fileservice/fileUploads/{item.img}")" alt="BasicCRUDIMG" width="40" height="40" style="width: 40px;height:40px;">
+                </th>
+                <td class="text-center">@item.movie_code</td>
+                <td class="text-center">@item.title</td>
+                <td class="text-center">@item.category</td>
+                <td class="text-left">@Helper.StripHtmlTags(Helper.StringLimit(item.detail,50))</td>
+                <td class="text-center text-nowrap">@Helper.DateToString(item.publish_start_date,"th") - @Helper.DateToString(item.publish_end_date,"th")</td>
+                <td class="text-center">@item.create?.name</td>
+                <td class="text-center text-nowrap">@Helper.DateTimeToString(item.create_date,"th")</td>
+            </tr>
+        }
+    </tbody>
+</table>

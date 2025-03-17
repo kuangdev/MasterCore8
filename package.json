@@ -1,0 +1,51 @@
+{
+  "name": "MasterCore8",
+  "version": "1.0.0",
+  "description": "master dotnet core mvc",
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+  },
+  "author": "KaiKuang.dev",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "laravel-mix": "^6.0.48",
+    "postcss": "^8.4.14",
+    "style-loader": "^3.3.1"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.5",
+    "admin-lte": "^3.2.0",
+    "axios": "^0.27.2",
+    "bootstrap-icons": "^1.9.1",
+    "chart.js": "^3.8.0",
+    "datatables.net": "^1.12.1",
+    "datatables.net-bs": "^1.12.1",
+    "file-saver": "^2.0.5",
+    "flatpickr": "^4.6.13",
+    "floatthead": "^2.2.4",
+    "font-awesome": "^4.7.0",
+    "glightbox": "^3.2.0",
+    "inputmask": "^5.0.7",
+    "jquery": "^3.6.0",
+    "jquery-ajax-unobtrusive": "^3.2.6",
+    "jquery-equal-height": "^1.0.4",
+    "jquery-validation": "^1.19.5",
+    "jquery-validation-unobtrusive": "^3.2.12",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "select2": "^4.1.0-rc.0",
+    "signature_pad": "^4.0.5",
+    "sortablejs": "^1.15.0",
+    "sweetalert2": "^11.4.17",
+    "underscore": "^1.13.4",
+    "vue": "^3.2.37",
+    "xlsx": "^0.18.5"
+  }
+}

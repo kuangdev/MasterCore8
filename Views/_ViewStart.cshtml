@@ -1,0 +1,16 @@
+@{
+    Layout = "_Layout";
+    ViewData["AppName"] = "MasterCore8";
+    ViewData["container"] = "container-fluid";
+    ViewData["IconApp"] = Url.Content("~" +(ViewData["IconApp"] ?? "/images/favicon.png").ToString());
+    ViewData["UserImg"] = Url.Content("~" +(ViewData["UserImg"] ?? "/images/favicon.png").ToString());
+    if(User.Identity.IsAuthenticated){
+        var userId = User.FindFirst("id").Value;
+        ViewData["UserImg"] = Url.Content("~/UserImg/"+userId);        
+    }
+    ViewData["Breadcrumb"] = new List<Breadcrumb>();
+    
+    var PublishVersion = Helper.GetVersionByJson("MasterCore8.deps.json","MasterCore8");
+    ViewData["PublishVersion"] = PublishVersion;
+}
+

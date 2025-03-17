@@ -1,0 +1,80 @@
+@{
+    string HomePart=Url.Action("Index","Home",null,"http");
+    string LoginPath=Url.Action("Login","Auth",null,"http");
+    string LogoutPath=Url.Action("Logout","Auth",null,"http");
+    string ResetPasswordPath=Url.Action("ResetPassword","Auth",null,"http");
+    string Title=ViewData["Title"] as string;
+    string IconApp = (ViewData["IconApp"] ?? "~/images/favicon.png") as string;
+    string ThemeColor = (ViewData["ThemeColor"] ?? "#00a65a") as string;
+    string[] MenuActive = (ViewData["MenuActive"] ?? new string[]{ "" }) as string[];
+    string MenuActiveJson = JsonConvert.SerializeObject(new string [] {Context.Request.Path.ToString()});
+    if(MenuActive?.Length > 0 && MenuActive?[0] != ""){ 
+        MenuActiveJson = JsonConvert.SerializeObject(MenuActive);
+    }
+    
+    string Version = "20220512";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="@IconApp" />
+    <meta name="csrf-token" content="">
+    <meta name="homepage" content="@HomePart">
+    <meta name="appName" content="@ViewBag.AppName">
+    <meta name="cacheVersion" content="@Version">
+
+    <title>@Title</title>
+    <script root>
+        var _myPermissions = [];
+        var _myRoles = [];
+    </script>
+
+    <link rel="stylesheet" href="~/css/master-app.css?v=@Version">
+    <link rel="stylesheet" href="~/css/customflash.css?v=@Version">
+    <style>
+        .toast-body{
+            min-width: 250px;
+        }
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+
+<body class="layout-fixed text-sm sidebar-mini sidebar-collapse">    
+    <div id="ajax-first-load" class="ajax-loading" style="background: rgba(255, 255, 255, 0.9);"></div>
+    <div class="wrapper">          
+            <section id="main-content" class="content">
+                @RenderBody()
+            </section>
+    </div>        
+    <!-- ./wrapper -->
+    @Html.AntiForgeryToken()
+    
+    <script root src="~/js/master-app.js?v=@Version"></script>
+    <script>
+        _helper.init();
+    </script>
+    @if(!string.IsNullOrEmpty(TempData["info"]?.ToString())){
+        <script> alertBox2("info","@Html.Raw(TempData["info"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["warning"]?.ToString())){
+        <script> alertBox2("warning","@Html.Raw(TempData["warning"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["success"]?.ToString())){
+        <script> alertBox2("success","@Html.Raw(TempData["success"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["danger"]?.ToString())){
+        <script> alertBox2("danger","@Html.Raw(TempData["danger"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["error"]?.ToString())){
+        <script> alertBox2("danger","@Html.Raw(TempData["error"])"); </script>
+    }
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

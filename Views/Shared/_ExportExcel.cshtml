@@ -1,0 +1,172 @@
+@{
+    var FileName = ViewBag?.FileName ?? "Export_"+DateTime.Now.ToString("yyyy-MM-dd")+".xls";
+}
+<html>
+<head>
+<link rel="stylesheet" href="@Url.Content("~/css/pdf-fonts.css")" />
+<meta charset="UTF-8"/>
+<script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
+<script type="text/javascript">
+var tablesToExcelMulti = (function ($) {
+    let uri = 'data:application/vnd.ms-excel;base64,'
+    , html_start = `<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">`
+    , template_ExcelWorksheet = `<x:ExcelWorksheet><x:Name>{SheetName}</x:Name><x:WorksheetSource HRef="sheet{SheetIndex}.htm"/></x:ExcelWorksheet>`
+    , template_ListWorksheet = `<o:File HRef="sheet{SheetIndex}.htm"/>`
+    , template_HTMLWorksheet = `
+------=_NextPart_dummy
+Content-Location: sheet{SheetIndex}.htm
+Content-Type: text/html; charset=utf-8
+
+` + html_start + `
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link id="Main-File" rel="Main-File" href="../WorkBook.htm">
+    <link rel="File-List" href="filelist.xml">
+    <style>
+        {SheetCss}
+    </style>
+</head>
+<`+`body`+`><table border="{TableBorder}">{SheetContent}</table></`+`body`+`>
+</html>`
+    , template_WorkBook = `MIME-Version: 1.0
+X-Document-Type: Workbook
+Content-Type: multipart/related; boundary="----=_NextPart_dummy"
+
+------=_NextPart_dummy
+Content-Location: WorkBook.htm
+Content-Type: text/html; charset=utf-8
+
+` + html_start + `
+<head>
+<meta name="Excel Workbook Frameset">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="File-List" href="filelist.xml">
+<!--[if gte mso 9]><xml>
+ <x:ExcelWorkbook>
+    <x:ExcelWorksheets>{ExcelWorksheets}</x:ExcelWorksheets>
+    <x:ActiveSheet>0</x:ActiveSheet>
+ </x:ExcelWorkbook>
+</xml><![endif]-->
+</head>
+<frameset>
+    <frame src="sheet0.htm" name="frSheet">
+    <noframes><`+`body`+`><p>This page uses frames, but your browser does not support them.</p></`+`body`+`></noframes>
+</frameset>
+</html>
+{HTMLWorksheets}
+Content-Location: filelist.xml
+Content-Type: text/xml; charset="utf-8"
+
+<xml xmlns:o="urn:schemas-microsoft-com:office:office">
+    <o:MainFile HRef="../WorkBook.htm"/>
+    {ListWorksheets}
+    <o:File HRef="filelist.xml"/>
+</xml>
+------=_NextPart_dummy--
+`
+    , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+    return async function (tables, filename,_callback) {
+        let context_WorkBook = {
+            ExcelWorksheets:''
+        ,   HTMLWorksheets: ''
+        ,   ListWorksheets: ''
+        };
+        let _tables = jQuery(tables);
+        await $.each(_tables,function(SheetIndex){
+            let $table = $(this);
+            let SheetName = $table.attr('data-SheetName');
+            if($.trim(SheetName) === ''){
+                SheetName = 'Sheet' + SheetIndex;
+            }
+            context_WorkBook.ExcelWorksheets += format(template_ExcelWorksheet, {
+                SheetIndex: SheetIndex
+            ,   SheetName: SheetName
+            });
+            context_WorkBook.HTMLWorksheets += format(template_HTMLWorksheet, {
+                SheetIndex: SheetIndex
+            ,   SheetContent: $table.html()
+            ,   SheetCss: $('style[SheetCss=true]').html()
+            ,   TableBorder: $table.attr('border') ?? "0"
+            });
+            context_WorkBook.ListWorksheets += format(template_ListWorksheet, {
+                SheetIndex: SheetIndex
+            });
+        });
+
+        let link = document.createElement("A");
+        link.href = uri + base64( format(template_WorkBook, context_WorkBook));
+        link.download = filename || 'Workbook.xls';
+        link.target = '_blank';
+        await document.body.appendChild(link);
+        await link.click();
+        console.log("removeChild");
+        await document.body.removeChild(link);
+
+        await _callback("success");
+    }
+})(jQuery);
+
+
+</script>
+<style SheetCss="true">    
+    table {
+        clear: both;
+        border: 1px solid darkgray;
+        border-collapse: collapse;
+    }
+
+    table td, table th {            
+        padding: 5px 10px;
+        text-align: center;
+        font-weight: 400;
+    }
+    table th{
+        white-space: nowrap;
+        font-weight: bold;
+        background-color: #ddd;
+    }
+    .mr-3{  margin-right: 10px; }
+    .text-primary{ color: blue; }
+    .text-info{ color: lightblue; }
+    .text-warning{ color: yellow; }
+    .text-danger { color: red; }
+    .text-success { color: green; }
+    .text-400{ color: #333; font-weight: 400; }
+    .text-bold{ font-weight: bold; }
+    .text-nowrap{ white-space: nowrap; }
+    .text-left{ text-align: left; }
+    .text-center{ text-align: center; }
+    .text-right{ text-align: right; }
+</style>
+<style>
+    .teble-export{
+        display: none;
+    }    
+</style>
+</head>
+<body onload="tablesToExcelMulti('.teble-export', '@FileName', function (res){ console.log(res);window.close() });">
+    @* ==== example code ====  
+   
+        <table class="teble-export" border="1" data-SheetName="SheetName">
+            <thead class="thead-light">
+                <tr>
+                    <th>head1</th>
+                    <th>head2</th>
+                    <th>head3</th>
+                    <th>head4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>body1</td>
+                    <td>body2</td>
+                    <td>body3</td>
+                    <td>body4</td>
+                </tr>
+            </tbody>
+        </table>
+    *@
+    @RenderBody()
+</body>
+</html>

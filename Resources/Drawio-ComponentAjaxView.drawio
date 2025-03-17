@@ -1,0 +1,100 @@
+<mxfile host="65bd71144e">
+    <diagram id="VS-maAclW4UTbSG2xfI4" name="Flow">
+        <mxGraphModel dx="681" dy="639" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="650" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="80" y="70" width="390" height="500" as="geometry"/>
+                </mxCell>
+                <mxCell id="647" value="" style="group" vertex="1" connectable="0" parent="650">
+                    <mxGeometry y="60" width="390" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="645" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="647">
+                    <mxGeometry width="390" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="648" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="647" source="636" target="639">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="636" value="Model" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="647">
+                    <mxGeometry x="20" y="214.35897435897436" width="90" height="45.128205128205124" as="geometry"/>
+                </mxCell>
+                <mxCell id="637" value="Context" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="647">
+                    <mxGeometry x="150" y="112.82051282051282" width="90" height="45.128205128205124" as="geometry"/>
+                </mxCell>
+                <mxCell id="641" value="" style="edgeStyle=none;html=1;" edge="1" parent="647" source="636" target="637">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="638" value="Database" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="647">
+                    <mxGeometry x="150" y="22.564102564102562" width="90" height="45.128205128205124" as="geometry"/>
+                </mxCell>
+                <mxCell id="642" value="" style="edgeStyle=none;html=1;" edge="1" parent="647" source="637" target="638">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="639" value="Controller" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="647">
+                    <mxGeometry x="240" y="214.35897435897436" width="90" height="45.128205128205124" as="geometry"/>
+                </mxCell>
+                <mxCell id="640" value="View" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="647">
+                    <mxGeometry x="130" y="327.1794871794872" width="90" height="45.128205128205124" as="geometry"/>
+                </mxCell>
+                <mxCell id="644" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="647" source="639" target="640">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="649" value="Flow Dotnet Core MVC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="650">
+                    <mxGeometry width="390" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="666" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="585" y="130" width="490" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="665" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="666">
+                    <mxGeometry width="490" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="651" value="ComponentAjaxView" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="666">
+                    <mxGeometry x="40" y="40" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="659" style="edgeStyle=none;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="666" source="652" target="651">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="652" value="Ajax" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="666">
+                    <mxGeometry x="100" y="250" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="655" value="" style="edgeStyle=none;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="666" source="651" target="652">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="653" value="Controller" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="666">
+                    <mxGeometry x="270" y="110" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="656" value="" style="edgeStyle=none;html=1;" edge="1" parent="666" source="652" target="653">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="658" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="666" source="654" target="652">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="654" value="View" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="666">
+                    <mxGeometry x="270" y="310" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="657" value="" style="edgeStyle=none;html=1;" edge="1" parent="666" source="653" target="654">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="660" value="Response View" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=15;" vertex="1" parent="666">
+                    <mxGeometry x="160" y="307" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="661" value="Return View" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=90;" vertex="1" parent="666">
+                    <mxGeometry x="317" y="210" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="662" value="Append Html" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=70;" vertex="1" parent="666">
+                    <mxGeometry x="40" y="160" width="100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="663" value="Call Ajax By URL" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=75;" vertex="1" parent="666">
+                    <mxGeometry x="100" y="150" width="100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="664" value="Call Controller By Url" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=-35;" vertex="1" parent="666">
+                    <mxGeometry x="181.34000000000003" y="204" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="667" value="Component Ajax View" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="585" y="70" width="490" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

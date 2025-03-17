@@ -1,0 +1,52 @@
+@model PaginatedList<tbbasic_crud>
+@{
+    Layout = null;
+}
+
+<div class="table-responsive mb-3">
+    <table id="table-data" class="table table-bordered table-hover table-sm mb-2">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center text-nowrap" style="min-width: 30px;width: 30px;">No.</th>
+                <th class="text-center text-nowrap">IMG</th>
+                <th class="text-center text-nowrap">Movie Code</th>
+                <th class="text-center text-nowrap">Title</th>
+                <th class="text-center text-nowrap">Category</th>
+                <th class="text-center text-nowrap">Detail</th>
+                <th class="text-center text-nowrap">Publish Date</th>
+                <th class="text-center text-nowrap">CreateBy</th>
+                <th class="text-center text-nowrap">CreateDate</th>
+                <th class="text-center text-nowrap" style="min-width: 80px;width: 80px;right: 0px;">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var (index, item) in Model.Select((item,i)=>(i,item)))
+            {
+                <tr>
+                    <th class="text-center text-nowrap">@(Model.StartIndex + (index + 1))</th>
+                    <th class="text-center text-nowrap">
+                        <img src="@Url.Content($"~/fileservice/fileUploads/{item.img}")" alt="BasicCRUDIMG" style="width: 40px;height:40px;">
+                    </th>
+                    <td class="text-center">@item.movie_code</td>
+                    <td class="text-center">@item.title</td>
+                    <td class="text-center">@(item.lookup_category?.lookup_name ?? item.category)</td>
+                    <td class="text-center">@Helper.StripHtmlTags(Helper.StringLimit(item.detail,50))</td>
+                    <td class="text-center">@Helper.DateToString(item.publish_start_date,"th") - @Helper.DateToString(item.publish_end_date,"th")</td>
+                    <td class="text-center">@item.create?.name</td>
+                    <td class="text-center">@Helper.DateTimeToString(item.create_date,"th")</td>
+                    <th class="text-center">
+                        <button type="button" class="btn btn-xs btn-link" onclick="getModalShow('@item.id', 'Detail: @item.movie_code')"> <i class="bi bi-three-dots"></i> </button>
+                        <button type="button" class="btn btn-xs btn-link" onclick="getModalEdit('@item.id', 'Edit Data : @item.movie_code')"> <i class="bi bi-pencil-square"></i> </button>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-between align-items-center mt-0 mb-2">
+    <div> 
+        Total : <b>@Model.TotalItems </b> 
+        Show : [<b>@(Model.StartIndex+1) - @(Model.EndIndex+1) </b>]
+    </div>
+    @Html.Raw(Model.GenPagination())
+</div>

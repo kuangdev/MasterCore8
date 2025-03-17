@@ -1,0 +1,31 @@
+@model List<Breadcrumb>;
+<!-- Content Header (Page header) -->
+<section id="content-header" class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center flex-wrap justify-content-between" style="row-gap:0.5rem;">
+            <div class="content-header-left flex-grow-1">
+                <div class="toggle-site-memu">
+                    <a class="sidebar-toggle" data-widget="pushmenu" href="#" role="button"><i
+                            class="bi bi-list h5"></i></a>
+                </div>
+                <nav class="head-breadcrumb px-3 d-inline-block mb-2" aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        @foreach (var item in @Model)
+                        {
+                            <li can="@item.Can" class="breadcrumb-item">
+                                @if(item.Active){
+                                    <i class="@item.Icon"></i> @item.Name
+                                }else{ 
+                                    <a href="@item.Link" class="@item.Class" @(String.IsNullOrEmpty(@item.Target) ? "" : Html.Raw($"target='{@item.Target}'"))>
+                                        <i class="@item.Icon"></i> @item.Name
+                                    </a>
+                                }
+                            </li>
+                        }
+                    </ol>
+                </nav>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>

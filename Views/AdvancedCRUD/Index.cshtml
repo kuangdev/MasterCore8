@@ -1,0 +1,212 @@
+@model List<AppUser>
+@{
+    Layout="AdminLTE/_Layout";
+    ViewData["Title"] = "Movie Like List";
+    ViewData["MenuActive"] = new string[]{ Url.Action("Index", "AdvancedCRUD") };
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-house-door",
+            Link = @Url.Action("Index", "Home"), Name = "Home",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-camera-reels",
+            Link = @Url.Action("Index", "AdvancedCRUD"), Name = "Movie Like List",
+            Class = "", Target="", Active=true
+        }
+    };
+
+    var lookup_category_list  = ViewBag.lookup_category_list as List<tblookup>;
+}
+
+<div class="card card-primary card-outline " can="">
+    <div class="card-header ">
+        <h3 class="card-title"> <i class="bi bi-camera-reels"></i> Movie Like List </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body"> 
+        <form id="form-search" action="@Url.Action("Index","AdvancedCRUD")" method="get" >
+           
+            <div class="row">
+                <formitem 
+                    col = "col-md-3" type = "month" label = "PublishMonth" show-label = "false" 
+                    id = "form-search-monthyear" Name = "monthyear" 
+                    value = "@Context.Request.Query["monthyear"].ToString()" class = "" icon = ""  
+                    inline = "true" form-group = "true" />
+                            
+                <formitem 
+                    col = "col-md-3" type = "select" label = "category" show-label = "false" 
+                    id = "form-search-category" Name = "category" 
+                    value = "@Context.Request.Query["category"]" class = "" icon = ""  
+                    inline = "true" form-group = "true" 
+                    option = "lookup_category_list.ToDictionary(l=>l.lookup_code, l=>l.lookup_code)"/>
+
+                <formitem 
+                    col = "col-md-6" type = "text" label = "search_key" show-label = "false" 
+                    id = "form-search-search_key" Name = "search_key" 
+                    value = "@Context.Request.Query["search_key"]" class = "" icon = ""  
+                    inline = "true" form-group = "true" />
+            </div>
+        </form>    
+            <div class="d-flex justify-content-between mb-1">
+                <div>
+                    <button class="btn btn-primary btn-sm mb-1 text-left" type="button" onclick="getModalCreate('Create Movie Like')" >
+                        <i class="bi bi-plus-lg"></i> Create Movie Like &nbsp;
+                    </button>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <form action="@Url.Action("ImportData","AdvancedCRUD")" method="post" enctype="multipart/form-data" class="form-loading mr-1">
+                        <input type="file" class="border border-secondary p-1 rounded" style="width: 145px;" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                        <button class="btn btn-primary mb-1 text-center btn-export-excel" type="submit" title="Upload">
+                            <i class="bi bi-upload"></i> Import
+                        </button>
+                    </form>
+                    <a href="@Url.Action("TemplateImport","AdvancedCRUD")@Helper.StringZero(Context.Request.QueryString.ToString(),"?")&export=EXCEL" class="btn btn-success btn-sm mb-1 mr-2 text-center btn-export-excel" target="_blank">
+                        <i class="bi bi-file-arrow-down"></i> Template Import
+                    </a>
+                    <button class="btn btn-danger btn-sm mb-1 mr-1 text-center btn-export" type="button" onclick="_helper.popup('@Url.Action("ExportData","AdvancedCRUD")@Helper.StringZero(Context.Request.QueryString.ToString(),"?")&export=PDF','confrimstatus-export-pdf')">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </button>
+                    <a href="@Url.Action("ExportData","AdvancedCRUD")@Helper.StringZero(Context.Request.QueryString.ToString(),"?")&export=EXCEL" class="btn btn-success btn-sm mb-1 text-center btn-export-excel" target="_blank">
+                        <i class="bi bi-file-earmark-spreadsheet-fill"></i> Excel
+                    </a>
+                </div>
+            </div>          
+
+        
+
+        @* table data*@
+        <div id="table-data-div"
+            data-url="@Url.Action("TableAdvancedCRUD","AdvancedCRUD")"
+            data-query="@Context.Request.GetDisplayUrl()"
+            data-page=""
+            data-updated="tableUpdate" class="componentAjaxView">
+        </div>
+    </div>
+</div>
+
+
+
+<form id="form-modal-create" method="post" action="@Url.Action("Store","AdvancedCRUD")" class="form-loading" enctype="multipart/form-data">
+    <div id="modal-create" class="modal fade" role="dialog" aria-labelledby="modal-create-title" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-create-title">Title</h5>
+                    <a href="javascript:void(0)" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div id="modal-create-body" class="modal-body">
+                    <p>...</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" name="btnSubmit" value="Submit" type="submit"> <i class="bi bi-save"></i> Create </button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-label="Close" type="button"> <i class="bi bi-box-arrow-left"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="modal-show" class="modal fade" role="dialog" aria-labelledby="modal-show-title" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-show-title">Title</h5>
+                <a href="javascript:void(0)" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div id="modal-show-body" class="modal-body">
+                <p>...</p>
+            </div>
+            <div class="modal-footer">
+                <form id="form-modal-delete" action="" method="post" class="form-loading">
+                    <button class="btn btn-danger" onclick="return confirm('ยืนยันการลบข้อมูล?')" name="btnSubmit" value="Delete" type="submit"> <i class="bi bi-trash"></i> Delete </button>
+                </form>
+                <button class="btn btn-default" data-dismiss="modal" aria-label="Close" type="button"> <i class="bi bi-box-arrow-left"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<form id="form-modal-edit" method="post" action="@Url.Action("Update","AdvancedCRUD")" class="form-loading" enctype="multipart/form-data">
+    <div id="modal-edit" class="modal fade" role="dialog" aria-labelledby="modal-edit-title" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-edit-title">Title</h5>
+                    <a href="javascript:void(0)" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div id="modal-edit-body" class="modal-body">
+                    <p>...</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" name="btnSubmit" value="Submit" type="submit"> <i class="bi bi-save"></i> Update </button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-label="Close" type="button"> <i class="bi bi-box-arrow-left"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function getModalCreate(Title){
+            $('#modal-create-title').text(Title);
+            $('#modal-create-body').componentAjaxView({url: `@Url.Action("FormCreate","AdvancedCRUD")`}); 
+            $('#modal-create').modal("show");
+        }        
+        function getModalShow(id,Title){
+            
+            $('#form-modal-delete').attr("Action", `@Url.Action("Delete","AdvancedCRUD")?id=${id}`);
+
+            $('#modal-show-title').text(Title);
+            $('#modal-show-body').componentAjaxView({url: `@Url.Action("FormShow","AdvancedCRUD")?id=${id}`}); 
+            $('#modal-show').modal('show');
+        }
+        function getModalEdit(id, Title){
+            $('#form-modal-edit').attr("Action", `@Url.Action("Update","AdvancedCRUD")?id=${id}`);
+            $('#modal-edit-title').text(Title);
+            $('#modal-edit-body').componentAjaxView({url: `@Url.Action("FormEdit","AdvancedCRUD")?id=${id}`}); 
+            $('#modal-edit').modal('show');
+        }
+
+        $('#form-search').on('submit', function (e){
+            e.preventDefault();
+            var doc_status = $(e.target).val();
+            let _url = "@Url.Action("Index","AdvancedCRUD")?"+$('#form-search').serialize();
+            window.history.pushState(_url, "AdvancedCRUD", _url);
+            $('#table-data-div').componentAjaxView({ 
+                url: "@Url.Action("TableAdvancedCRUD","AdvancedCRUD")",
+                query: "?"+$('#form-search').serialize()
+            });
+        });
+
+        $('#form-search-monthyear,#form-search-category').on('change', _.debounce(function (e) {
+            $('#form-search').submit();
+        },200));
+
+        $('#form-search-search_key').on('keyup', _.debounce(function (e) {
+            if(e.keyCode == 13) return false;
+            $('#form-search').submit();
+        },500));
+    </script>
+}
+
+
+@section Styles {
+    <style>
+        #table-data td,#table-data th {
+            vertical-align: middle;
+        }
+    </style>
+}

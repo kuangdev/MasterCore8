@@ -1,0 +1,129 @@
+@model PaginatedList<tbstudent>
+@{
+    Layout="AdminLTE/_Layout";
+    ViewData["Title"] = "Student";
+    ViewData["MenuActive"] = new string[]{ Url.Action("Index", "Student") };
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-house-door",
+            Link = @Url.Action("Index", "Home"), Name = "Home",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-person-badge",
+            Link = @Url.Action("Index", "Home"), Name = "Student",
+            Class = "", Target="", Active=true
+        }
+    };
+
+}
+
+<div class="card card-primary card-outline " can="">
+    <div class="card-header ">
+        <h3 class="card-title"> <i class="bi bi-person-badge"></i> Student Manage </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <form action="@Url.Action("Index","Student")" method="get">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Search</span>
+                </div>
+                <input id="form-input-search_key" class="form-control" type="text" name="search_key" value="@Context.Request.Query["search_key"]" placeholder="ค้นหา">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary"> <i class="bi bi-search"></i> ค้นหา</button>
+                </div>
+            </div>
+        </form>
+        
+        <div class="d-flex justify-content-between my-2">
+                <div class="text-left">
+                    <a href="@Url.Action("FormCreate","Student")" class="btn btn-primary"> <i class="bi bi-plus-lg"></i> Add Student </a>
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-danger btn-sm mb-1 text-center btn-export" type="button" onclick="_helper.popup('@Url.Action("ExportData","Student")@Helper.StringZero(Context.Request.QueryString.ToString(),"?")&export=PDF','student-export-pdf')">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </button>
+                    <a href="@Url.Action("ExportData","Student")@Helper.StringZero(Context.Request.QueryString.ToString(),"?")&export=EXCEL" class="btn btn-success btn-sm mb-1 text-center btn-export-excel" target="_blank">
+                        <i class="bi bi-file-earmark-spreadsheet-fill"></i> Excel
+                    </a>
+                </div>
+            </div>
+        <div class="table-responsive mb-3">
+            <table id="table-data" class="table table-bordered table-hover table-sm mb-2">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center text-nowrap" style="min-width: 30px;width: 30px;">No.</th>
+                        <th class="text-center text-nowrap">IMG</th>
+                        <th class="text-center text-nowrap">Name</th>
+                        <th class="text-center text-nowrap">Gender</th>
+                        <th class="text-center text-nowrap">Address</th>
+                        <th class="text-center text-nowrap">Class</th>
+                        <th class="text-center text-nowrap">Active Date</th>
+                        <th class="text-center text-nowrap">CreateBy</th>
+                        <th class="text-center text-nowrap">CreateDate</th>
+                        <th class="text-center text-nowrap" style="min-width: 90px;width: 90px;right: 0px;">Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (index, item) in Model.Select((item,i)=>(i,item)))
+                    {
+                        <tr>
+                            <th class="text-center text-nowrap">@(Model.StartIndex + (index + 1))</th>
+                            <th class="text-center text-nowrap">
+                                <img src="@Url.Content($"~/fileservice/fileUploads/{item.img}")" alt="BasicCRUDIMG" style="width: 40px;height:40px;">
+                            </th>
+                            <td class="text-center">@(item.name ?? "")</td>
+                            <td class="text-center">@(item.gender ?? "")</td>
+                            <td class="text-center">@(item.address ?? "")</td>
+                            <td class="text-center">@(item.class_room ?? "")</td>
+                            <td class="text-center">@Helper.DateToString(item.active_date,"th")</td>
+                            <td class="text-center">@(item.create?.name ?? "")</td>
+                            <td class="text-center">@Helper.DateTimeToString(item.create_date,"th")</td>
+                            <th class="text-center">
+                                <a href="@Url.Action("FormShow","Student", new { id=item.id })" class="btn btn-xs btn-info"><i class="bi bi-info-circle"></i></a>
+                                <a href="@Url.Action("FormEdit","Student", new { id=item.id })" class="btn btn-xs btn-warning"><i class="bi bi-pencil-square"></i></a>
+                                <button class="btn btn-xs btn-danger" onclick="DeleteItem('@item.id')"><i class="bi bi-trash"></i></button>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-0 mb-2">
+            <div> 
+                Total : <b>@Model.TotalItems </b> 
+                Show : [<b>@(Model.StartIndex+1) - @(Model.EndIndex+1) </b>]
+            </div>
+            @Html.Raw(Model.GenPagination(Context.Request.GetDisplayUrl()))
+        </div>
+    </div>
+</div>
+
+
+<form id="form-student-delete" method="post" action="@Url.Action("Delete","Student")" class="forn-loading">
+    <input id="form-student-delete-id" type="hidden" name="id" value="">
+</form>
+
+@section Scripts {
+    <script>
+        function DeleteItem(id){
+            var cf = confirm("ยืนยันการลบข้อมูล ?");
+            if(cf){
+                $('#form-student-delete-id').val(id);
+                $('#form-student-delete').submit();
+            }
+        }
+    </script>
+}
+
+
+@section Styles {
+    <style>
+    </style>
+}

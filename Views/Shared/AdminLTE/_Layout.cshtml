@@ -1,0 +1,533 @@
+@inject MasterCore8.Data.ApplicationDbContext _context;
+@{
+    string HomePart=Url.AbsoluteContent("");
+    string LoginPath=Url.Action("Login","Auth",null,"http");
+    string LogoutPath=Url.Action("Logout","Auth",null,"http");
+    string CKUploadUrl = Url.Action("CKUpload","Home",null,"http");
+    string ResetPasswordPath=Url.Action("ChangePassword","Auth",null,"http");
+    string Title=ViewData["Title"] as string;
+    string IconApp = (ViewData["IconApp"] ?? "~/images/favicon.png") as string;
+    string ThemeColor = (ViewData["ThemeColor"] ?? "crimson") as string;
+    string[] MenuActive = (ViewData["MenuActive"] ?? new string[]{ "" }) as string[];
+    string MenuActiveJson = JsonConvert.SerializeObject(new string [] {Url.Content("~")+Context.Request.Path.ToString()});
+    if(MenuActive?.Length > 0 && MenuActive?[0] != ""){ 
+        MenuActiveJson = JsonConvert.SerializeObject(MenuActive);
+    }
+    List<Breadcrumb> BreadcrumbList = ViewData["Breadcrumb"] as List<Breadcrumb>;
+    List<string> Navbar = new List<string>{
+        
+    };    
+
+    string databaseName = _context.databaseName;
+    string publshMode = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    @* if(publshMode == "Development"){
+        ThemeColor="hotpink";
+    } *@
+    
+    string Version = "20220729";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="@IconApp" />
+    <meta name="csrf-token" content="">
+    <meta name="homepage" content="@HomePart">
+    <meta name="CKUploadUrl" content="@CKUploadUrl">
+    <meta name="appName" content="@ViewBag.AppName">
+    <meta name="cacheVersion" content="@Version">
+
+    <title>@ViewBag.AppName - @Title</title>
+    <script root>
+        var _myPermissions = [];
+        var _myRoles = [];
+        var _datePickerLocal = 'en';
+    </script>
+
+    <link rel="stylesheet" href="~/css/master-app.css?v=@Version">
+    <link rel="stylesheet" href="~/css/customflash.css?v=@Version">
+    <style root>
+        .main-header {
+            border-color: @ThemeColor;
+        }
+
+        .main-header,
+        .main-sidebar>.brand-link {
+            background: @ThemeColor;
+            color: #fff;
+        }
+
+        .main-sidebar>.brand-link.active {
+            background-color: @ThemeColor;
+        }
+
+        .main-header a,
+        .main-header,
+        .main-sidebar>.brand-link a.app-name {
+            color: #fff;
+        }
+
+
+        .main-header a.dropdown-item {
+            color: #212529;
+        }
+
+        .main-header a.nav-link:hover,
+        .main-header a.nav-link:active,
+        .main-header a.nav-link:focus,
+        .main-header a:hover,
+        .nav-sidebar>.nav-item .nav-link:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [class*=sidebar-dark] .nav-legacy.nav-sidebar>.nav-item>.nav-link.active,
+        [class*=sidebar-dark] .nav-sidebar>.nav-item>.nav-treeview>.nav-item>.nav-link.active {
+            border-color: @ThemeColor;
+            color: #ffc107;
+        }
+
+        [class*=sidebar-light] { background-color: #fff; }
+        [class*=sidebar-light] .nav-sidebar>.nav-item>.nav-link.active, 
+        [class*=sidebar-light] .nav-sidebar>.nav-item>.nav-link.active {
+            background-color: @ThemeColor;
+            color: #fff;
+        }
+        [class*=sidebar-light] .nav-legacy.nav-sidebar>.nav-item>.nav-link.active,
+        [class*=sidebar-light] .nav-sidebar>.nav-item>.nav-treeview>.nav-item>.nav-link.active {
+            border-color: @ThemeColor;
+            color: @ThemeColor;
+        }
+        [class*=sidebar-light] .nav-sidebar > .nav-item .nav-link,
+        [class*=sidebar-light] .user-panel a{
+            color: #595959;
+        }
+
+        #cookiebox {
+            display: none;
+        }
+        
+        @* MORE Custom Handler *@
+        /* ======= 2022-06-13 by kaikuang ================= */
+        .form-control:disabled {
+            color: #aaa;
+        }
+        .form-control[readonly]:not(:disabled) {
+            background-color: #f4f4f4;
+            border-style: dashed;
+        }
+        .flatpickr-input[readonly]:not(:disabled) {
+            background-color: #fff;
+            border-style: solid;
+        }
+        .flatpickr-input + input.input[readonly]:not(:disabled) {
+            background-color: #fff;
+            border-style: solid;
+        }
+        .form-control.input-validation-error {
+            border: 1px solid red;
+        }
+        .toast-body{
+            min-width: 250px;
+        }
+        .form-control,.input-group-text,
+        .text-sm .select2-container--default .select2-selection--single{
+            border-radius: 8px;
+        }
+        .input-group.input-group-inline .form-control{
+            border-top-left-radius: 8px !important;
+            border-bottom-left-radius: 8px !important;
+        }
+        label:not(.form-check-label):not(.custom-file-label) {
+            font-weight: 400;
+        }
+        span.help-block.text-danger.field-validation-error::before{
+            content: "* ";
+        }
+        span.help-block.text-danger.field-validation-error {
+            display: block;
+            background-color: #fff7ed;
+            font-size: 12px;
+            margin-top: 2px;
+            padding: 3px 10px;
+            border-radius: 8px;
+        }
+        .pagination.custom-pagination{
+            justify-content: space-between;            
+        }        
+        .pagination.custom-pagination .page-link {
+            padding: 0px;
+            min-width: 30px;
+            font-size: 12px;
+            line-height: 28px;
+            margin: 0px;
+            color: #212529;
+            text-align: center;
+        }
+        .pagination.custom-pagination > .page-item.active > .page-link { color: #fff; }
+        .table-sticky{
+            position: relative;
+            overflow: auto;
+            max-width: 100%;
+            max-height: 100%;
+            outline: .1em solid rgba(0,0,0,.5);
+        }
+        .table-sticky .table th{
+            border: none;
+            outline: 1px solid rgba(0,0,0,.5);
+        }
+        .table-sticky .table td{
+            border: none;
+            box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,.5);
+        }
+        .table-sticky:focus{
+            outline: 1px solid rgba(0,0,0,.1);
+        }
+        th.sticky{
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background-color: #e9ecef;
+            
+        }
+        th.sticky-row{
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0px;
+            z-index: 1;            
+            white-space: nowrap; 
+            background-color: #e9ecef;
+        }
+        th.sticky.sticky-row {
+            left: 0px;
+            z-index: 3;
+        }
+        @* active color set  *@
+        .btn-outline-color-active{ color: #333; border-color: white; }
+        .btn-outline-color-active:hover{ color: #333; background-color: white; border-color: white; }
+        .btn-outline-color-active:not(:disabled):not(.disabled).active
+        , .btn-outline-color-active:not(:disabled):not(.disabled):active
+        , .show>.btn-outline-color-active.dropdown-toggle {
+            color: #333;
+            background-color: white;
+            border-color: white;
+        }
+        .contract-color-active{ color: #333 !important;  background-color: white !important; }
+        @* ================ *@
+       
+        @* going_to_expired color set  *@
+        .btn-outline-color-going_to_expired{ color: #333; border-color: #ffc107; }
+        .btn-outline-color-going_to_expired:hover{ color: #333; background-color: yellow; border-color: yellow; }
+        .btn-outline-color-going_to_expired:not(:disabled):not(.disabled).active
+        , .btn-outline-color-going_to_expired:not(:disabled):not(.disabled):active
+        , .show>.btn-outline-color-going_to_expired.dropdown-toggle {
+            color: #333;
+            background-color: yellow;
+            border-color: yellow;
+        }
+        .contract-color-going_to_expired{ color: #333 !important;  background-color: yellow !important; }
+        @* ================ *@
+        @* will_be_expired color set  *@
+        .btn-outline-color-will_be_expired{ color: #333; border-color: #ffa1aa; }
+        .btn-outline-color-will_be_expired:hover{ color: #333; background-color: #ffa1aa; border-color: #ffa1aa; }
+        .btn-outline-color-will_be_expired:not(:disabled):not(.disabled).active
+        , .btn-outline-color-will_be_expired:not(:disabled):not(.disabled):active
+        , .show>.btn-outline-color-will_be_expired.dropdown-toggle {
+            color: #333;
+            background-color: #ffa1aa;
+            border-color: #ffa1aa;
+        }
+        .contract-color-will_be_expired{ color: #333 !important;  background-color: #ffa1aa !important; }
+        @* ================ *@
+        @* answer color set  *@
+        .btn-outline-color-answer{ color: #333; border-color: #a0ceff; }
+        .btn-outline-color-answer:hover{ color: #333; background-color: #a0ceff; border-color: #a0ceff; }
+        .btn-outline-color-answer:not(:disabled):not(.disabled).active
+        , .btn-outline-color-answer:not(:disabled):not(.disabled):active
+        , .show>.btn-outline-color-answer.dropdown-toggle {
+            color: #333;
+            background-color: #a0ceff;
+            border-color: #a0ceff;
+        }
+        .contract-color-answer{ color: #333 !important;  background-color: #a0ceff !important; }
+        @* ================ *@
+        @* expired color set  *@
+        .btn-outline-color-expired{ color: #333; border-color: #d6d8db ; }
+        .btn-outline-color-expired:hover{ color: #fff; background-color: #d6d8db ; border-color: #d6d8db ; }
+        .btn-outline-color-expired:not(:disabled):not(.disabled).active
+        , .btn-outline-color-expired:not(:disabled):not(.disabled):active
+        , .show>.btn-outline-color-expired.dropdown-toggle {
+            color: #333;
+            background-color: #d6d8db ;
+            border-color: #d6d8db ;
+        }
+        .contract-color-expired{ color: #333 !important;  background-color: #d6d8db !important; }
+        @* ================ *@
+        
+
+
+        td.warning-status{
+            text-align: center !important;
+            border: 2px dashed #000 !important;
+        }
+
+        
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+
+<body class="layout-fixed text-sm sidebar-mini sidebar-collapse">    
+    <div id="ajax-first-load" class="ajax-loading" style="background: rgba(255, 255, 255, 0.9);"></div>
+    <div class="wrapper">
+        <!-- Preloader -->
+        @await Html.PartialAsync("AdminLTE/_Navbar")
+        @await Html.PartialAsync("AdminLTE/_Sidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            
+            @await Html.PartialAsync("AdminLTE/_Breadcrumb", BreadcrumbList)
+            <!-- Main content -->
+            <section id="main-content" class="content">
+                @if(@ViewBag.container.ToString() != ""){
+                    @Html.Raw($"<div class='{ViewBag.container.ToString()}'>");
+                }
+                    @RenderBody()
+                <!-- /.content -->
+                @if(@ViewBag.container.ToString() != ""){
+                    @Html.Raw("</div>");
+                }
+            </section>
+
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                DB: <b>@databaseName</b>&nbsp;
+                Publish : <b>@(ViewBag?.PublishVersion ?? "xxxx")</b> @publshMode &nbsp;
+            </div>
+            <strong>Copyright &copy; 2022 <a href="@HomePart">KaiKuang - ICD</a>.</strong> All
+            rights
+            reserved.
+        </footer>
+
+        <!-- Form LOGOUT -->
+        <form id="form-logout" action="@LogoutPath" method="post" class="d-none">
+            <input type="hidden" name="_token" value="dplYggOtWXC1Z2hdhRqvAye06uNO0fLgNPbtgCU9">
+        </form>
+
+        <!-- Modal Reset Password-->
+        <form id="form-resetpassword" action="@ResetPasswordPath" method="post"
+            class="form-loading">
+            <input type="hidden" name="_token" value="dplYggOtWXC1Z2hdhRqvAye06uNO0fLgNPbtgCU9"> <input type="hidden"
+                name="_method" value="post">
+            <div id="modal-resetpassword" class="modal fade" role="dialog"
+                aria-labelledby="modal-resetpassword-title" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-resetpassword-title">Change Password</h5>
+                            <button class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <formitem 
+                                    col = "col-md-12" type = "password" label = "OldPassword" show-label = "true" 
+                                    id = "form-resetpassword-password" Name = "password" 
+                                    value = "" class = "" icon = ""  
+                                    inline = "false" form-group= "true" required = "true" />
+
+                                <formitem 
+                                    col = "col-md-12" type = "password" label = "newPassword" show-label = "true" 
+                                    id = "form-resetpassword-newPassword" Name = "newPassword" 
+                                    value = "" class = "" icon = ""  
+                                    inline = "false" form-group= "true" required = "true" />
+
+                                <formitem 
+                                    col = "col-md-12" type = "password" label = "NewPasswordConfirm" show-label = "true" 
+                                    id = "form-resetpassword-newPasswordConfirm" Name = "newPasswordConfirm" 
+                                    value = "" class = "" icon = ""  
+                                    inline = "false" form-group= "true" required = "true" />
+                                
+                            </div>                            
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"> <i class="bi bi-save"></i> Confirm</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="bi bi-box-arrow-left"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div id="cookiebox">
+            <div class="content mx-3">ใช้คุกกี้เพื่อพัฒนาประสบการณ์ใช้งาน</div>
+            <div class="mx-3">
+                <button id="btn-cookie-accept" class="btn btn-success"> ตกลง </button>
+                <button id="btn-cookie-detail" class="btn btn-secondary"> อ่านเพิ่มเติม </button>
+            </div>
+        </div>
+    </div>
+    <!-- ./wrapper -->
+    @Html.AntiForgeryToken()
+    
+    <script root src="~/js/master-app.js?v=@Version"></script>
+    <script root>        
+
+        _helper.init();
+        let sidebar_collapse = $('body').hasClass('sidebar-collapse');
+        console.log('sidebar-collapse: ', localStorage.getItem("sidebar"))
+        if (localStorage.getItem("sidebar") === null) {
+            window.localStorage.setItem('sidebar', sidebar_collapse);
+        } else {
+            sidebar_collapse = window.localStorage.getItem('sidebar') == "true" ? true : false;
+            if (sidebar_collapse === true) {
+                $('body').addClass('sidebar-collapse');
+            } else {
+                $('body').removeClass('sidebar-collapse');
+            }
+        }
+
+        $(document).ready(function () {
+            // reload signaturePadInit after ready
+            setTimeout(() => {
+                signaturePadInit();
+            },300);
+
+            $('.sidebar-toggle').click(() => {
+                let sidebar_collapse = !(window.localStorage.getItem('sidebar') == "true" ? true : false);
+                window.localStorage.setItem('sidebar', sidebar_collapse);
+                $('.float-thead').floatThead('destroy');
+                setTimeout(() => {
+                    $('.float-thead').each((index, el) => {
+                        var tbl = $(el);
+                        tbl.floatThead({
+                            responsiveContainer: function (tbl) {
+                                return tbl.closest('.table-responsive');
+                            },
+                            zIndex: 50,
+                            top: $('.content-header').outerHeight() || 0
+                        });
+                    });
+                }, 300);
+            });
+            $(window).resize(() => {
+                floatTheadReset()
+            });
+            let isMenuActive = "@MenuActive.Length";
+            if(isMenuActive){                
+                // sidebar menu active
+                try {
+                    let sidebar_menu_active = @Html.Raw(MenuActiveJson);
+                    // เปิดทั้งหมด
+                    //$('.nav-sidebar').find('li').toggleClass('menu-open',true).find('.nav-treeview').show();
+                    // ปิดทั้งหมด
+                    // $('.nav-sidebar').find('li').removeClass('menu-open').find('.nav-treeview').hide();
+                    $('.nav-sidebar').find('a').removeClass('active');
+                    sidebar_menu_active.forEach(active_link => {
+                        let custom_active_link = active_link;
+                        let a_active = $('.nav-sidebar').find(`a[href="${custom_active_link}"]`);
+                        a_active.each((index, el) => {
+                            $(el).addClass('active');
+                            let treeview = $(el).closest('.nav-treeview');
+                            if (treeview.length > 0) {
+                                let liactive = treeview.closest('li').eq(0);
+                                liactive.find('a').eq(0).addClass('active');
+                                liactive.addClass('menu-open');
+                                treeview.show();
+                            };
+                        });
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+
+            const el_main_header = document.querySelector(".main-header");
+            if (el_main_header) {
+                const observer = new IntersectionObserver((entries) => {
+                    if (!entries[0].isIntersecting) {
+                        document.querySelector("#content-header").classList.add('isSticky')
+                    } else {
+                        document.querySelector("#content-header").classList.remove('isSticky')
+                    }
+                });
+                observer.observe(el_main_header);
+            }
+
+            $('#nav-user-info').click(()=>{
+                event.stopPropagation();
+            });
+        });
+
+    </script>
+
+
+    <script root>
+        $('#form-resetpassword').validate({
+            rules: {
+                'password': {
+                    required: true,
+                    minlength: 4,
+                },
+                'newPassword': {
+                    required: true,
+                    minlength: 4,
+                },
+                'newPasswordConfirm': {
+                    required: true,
+                    minlength: 4,
+                    equalTo: "#form-resetpassword-newPasswordConfirm"
+                }
+            },
+            messages: {
+                'password': {
+                    required: 'This field is required.',
+                    minlength: 'Min Length 4 characters',
+                },
+                'newPassword': {
+                    required: 'This field is required.',
+                    minlength: 'Min Length 4 characters',
+                },
+                'newPasswordConfirm': {
+                    required: 'This field is required.',
+                    minlength: 'Min Length 4 characters',
+                    equalTo: "New Password Not Match!"
+                }
+            },
+            invalidHandler: function (event, validator) {
+                _helper.stopLoading('body');
+            }
+        });
+    </script>
+
+    @if(!string.IsNullOrEmpty(TempData["info"]?.ToString())){
+        <script> alertBox2("info","@Html.Raw(TempData["info"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["warning"]?.ToString())){
+        <script> alertBox2("warning","@Html.Raw(TempData["warning"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["success"]?.ToString())){
+        <script> alertBox2("success","@Html.Raw(TempData["success"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["danger"]?.ToString())){
+        <script> alertBox2("danger","@Html.Raw(TempData["danger"])"); </script>
+    }
+    @if(!string.IsNullOrEmpty(TempData["error"]?.ToString())){
+        <script> alertBox2("danger","@Html.Raw(TempData["error"])"); </script>
+    }
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

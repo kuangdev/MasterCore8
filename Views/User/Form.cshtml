@@ -1,0 +1,59 @@
+@model AppUser
+@{
+    Layout = null;
+    string formMode = ViewData["formMode"].ToString() ?? "form-create";
+}
+
+
+<div class="row">
+    <formitem col="col-md-6" type="hidden" label="id" show-label="true" 
+    asp-for="id" id="form-@(formMode)-id" Name="id" value="@Model.id" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" />
+
+    <formitem col="col-md-6" type="text" label="Emp No" show-label="true" 
+    asp-for="empno" id="form-@(formMode)-empno" Name="empno" value="@Model.empno" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" />
+
+    
+
+    <formitem col="col-md-6" type="text" label="Name" show-label="true" 
+    asp-for="name" id="form-@(formMode)-name" Name="name" value="@Model.name" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" />
+
+    <formitem col="col-md-6" type="text" label="Position" show-label="true" 
+    asp-for="position" id="form-@(formMode)-position" Name="position" value="@Model.position" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" />
+
+    <formitem col="col-md-6" type="text" label="Division" show-label="true" 
+    asp-for="div" id="form-@(formMode)-div" Name="div" value="@Model.div" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" />
+
+    <formitem col="col-md-6" type="text" label="Department" show-label="true" 
+    asp-for="dept_full" id="form-@(formMode)-dept_full" Name="dept_full" value="@Model.dept_full" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" />
+
+    <formitem col="col-md-6" type="text" label="Email" show-label="true" 
+    asp-for="email" id="form-@(formMode)-email" Name="email" value="@Model.email" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" />
+
+    <formitem col="col-md-6" type="text" label="Ext." show-label="true" 
+    asp-for="ext" id="form-@(formMode)-ext" Name="ext" value="@Model.ext" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="false" />
+    
+    <formitem col="col-md-6" type="password" label="Password" show-label="true" 
+    asp-for="password" id="form-@(formMode)-password" Name="password" value="@Model.password" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="@(formMode == "create")" />
+    
+    <formitem col="col-md-6" type="select" label="Role" show-label="true" 
+    asp-for="roles" id="form-@(formMode)-roles" Name="roles" value="@Model.roles" class="" 
+    icon="" inline="false"  form-group="true" select2="false" required="true" 
+    option="@Model.lookupRoleList" />    
+</div>
+
+<script>
+    setTimeout(()=>{
+        $(document).ready(function() {
+            @* $.validator.unobtrusive.parse('#form-modal-create,#form-modal-edit'); *@
+        });
+    },200);
+</script>

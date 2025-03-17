@@ -1,0 +1,29 @@
+@model LoginInput
+@{
+    Layout = "AdminLTE/_Blank";
+    ViewData["Title"] = "Forbidden: Access is denied";
+}
+
+
+<div class="d-flex justify-content-center align-items-center" style="min-height:300px;height: calc(100vh - 100px);">
+
+    <div class="text-center">
+        <h1 class="text-center"> Forbidden: Access is denied </h1>
+        @if(!string.IsNullOrEmpty(ViewBag.ReturnUrl)){
+            <a href="@Url.Content(ViewBag.ReturnUrl)" class="btn btn-default"> BACK </a>
+        }
+        <a href="@Url.Content("~/")" class="btn btn-primary"> HOME </a>
+    </div>
+
+</div>
+
+
+@section Scripts {
+<script>
+    
+</script>
+}
+
+@section Styles {
+
+}

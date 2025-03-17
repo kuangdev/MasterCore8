@@ -1,0 +1,76 @@
+@model LoginInput
+@{
+    Layout = "AdminLTE/_Blank";
+    ViewData["Title"] = "LOGIN PAGE";
+}
+
+<div class="login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-danger">
+            <div class="card-header text-center">
+                <a href="@Url.Action("Index","Home")" class="h5"><b>
+                    <i class="bi bi-lock"></i> @ViewBag.AppName
+                    </b>
+                </a>
+            </div>
+            <div class="card-body">
+                @* <p class="login-box-msg">
+                    <i class="bi bi-lock"></i> เข้าสู่ระบบ @ViewBag.AppName
+                </p> *@
+
+                <form id="form-login" action="@Url.Action("Login","Auth")" class="form-loading" method="post">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="username">Username</label>
+                            <div class="input-group input-group-inline">
+                                <input asp-for="username" class="form-control" autocomplete="off" autofocus="true" />
+                                <label for="username" class="mb-0 input-group-append">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-person"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            <span asp-validation-for="username" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group ">
+                            <label asp-for="password">Password</label>
+                            <div class="input-group input-group-inline">
+                                <input asp-for="password" type="password" class="form-control" />
+                                <label for="password" class="mb-0 input-group-append">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-lock"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-danger btn-block btn-flat"> <i
+                                class="bi bi-box-arrow-in-right"></i>
+                            LOGIN
+                        </button>
+                    </div>
+                </form>
+
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+<script>
+    
+</script>
+}
+
+@section Styles {
+
+}

@@ -1,0 +1,114 @@
+@model tbstudent
+@{
+    Layout="AdminLTE/_Layout";
+    ViewData["Title"] = "Create Student";
+    ViewData["MenuActive"] = new string[]{ Url.Action("Index", "Student") };
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-house-door",
+            Link = @Url.Action("Index", "Home"), Name = "Home",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-person-badge",
+            Link = @Url.Action("Index", "Student"), Name = "Student",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-person-plus",
+            Link = @Url.Action("FormCreate", "Student"), Name = "Create Student",
+            Class = "", Target="", Active=true
+        }
+    };
+
+    var gender_list = new Dictionary<string, string>(){{"ชาย","ชาย"}, {"หญิง", "หญิง"}};
+
+}
+
+<div class="card card-primary card-outline " can="">
+    <div class="card-header ">
+        <h3 class="card-title"> <i class="bi bi-person-plus"></i> Create Student </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body"> 
+        <form action="@Url.Action("Store", "Student")" method="post" enctype="multipart/form-data" class="form-loading">
+            <div class="row">
+                <formitem 
+                    col = "col-md-12" type = "text" label = "Name" show-label = "true" 
+                    asp-for = "name" id = "form-input-name" Name = "name" 
+                    value = "@Model.name" class = "" icon = ""  
+                    inline = "false" form-group = "true" required = "false" />
+                
+                
+
+                <div class="col-md-12">
+                    <formitem 
+                        col = "" type = "radio" label = "Gender" show-label = "true" 
+                        asp-for = "gender" id = "form-input-gender" Name = "gender" 
+                        value = "@Model.gender" class = "" icon = ""  
+                        inline = "true" form-group = "true" required = "false" 
+                        option="gender_list" radio-inline="true" />
+                </div>
+
+                <formitem 
+                    col = "col-md-12" type = "file" label = "Student IMG" show-label = "true" 
+                    id = "form-input-fileupload" Name = "fileupload" 
+                    value = "" class = "" icon = ""  
+                    inline = "false" form-group = "true" required = "false" accept="image/png, image/gif, image/jpeg" />
+
+                <formitem 
+                    col = "col-md-6" type = "text" label = "Class Room" show-label = "true" 
+                    asp-for = "class_room" id = "form-input-class_room" Name = "class_room" 
+                    value = "@Model.class_room" class = "" icon = ""  
+                    inline = "false" form-group = "true" required = "false" />
+
+                <formitem 
+                    col = "col-md-6" type = "date" label = "Active Date" show-label = "true" 
+                    asp-for = "active_date" id = "form-input-active_date" Name = "active_date" 
+                    value = "@Model.active_date" class = "" icon = ""  
+                    inline = "false" form-group = "true" required = "false" />
+
+                <formitem 
+                    col = "col-md-12" type = "textarea" label = "Address" show-label = "true" 
+                    asp-for = "address" id = "form-input-address" Name = "address" 
+                    value = "@Model.address" class = "" icon = ""  
+                    inline = "false" form-group = "true" required = "false" rows="3" />
+
+                <formitem 
+                    col = "col-md-12" type = "editor" label = "Portfolio" show-label = "true" 
+                    asp-for = "portfolio" id = "form-input-portfolio" Name = "portfolio" 
+                    value = "@Model.portfolio" class = "" icon = ""  
+                    inline = "false" form-group = "true" required = "false" rows="3" />
+        
+
+                <formitem 
+                    col = "col-md-12" type = "signature" label = "Signature" show-label = "true" 
+                    id = "form-input-signaturepad" Name = "signaturepad" 
+                    value = "" class = "" icon = ""  
+                    inline = "false" form-group = "true" required = "false" width="900px" height="200px" />
+                
+            </div>
+            <div class="text-center">
+                <a href="@Url.Action("Index","Student")" class="btn btn-secondary" > <i class="bi bi-arrow-left"></i> Back </a>
+                <button class="btn btn-primary" type="submit"> <i class="bi bi-save"></i> Add Data </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+    </script>
+}
+
+
+@section Styles {
+    <style>
+    </style>
+}

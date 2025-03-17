@@ -1,0 +1,105 @@
+@model List<tbbasic_crud>
+@{
+    Layout= null;
+    string export_type = @Helper.StringZero(Context.Request.Query["export"],"PDF");
+
+}
+
+<!DOCTYPE html>
+<html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+     
+    <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>DATA1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+    <title>Export Date @DateTime.Now.ToString("dd MMM yyyy")</title>
+    <meta charset="UTF-8"/>
+     
+    <style>
+        body {
+            margin: 0px;
+            font-family: 'Segoe UI', Arial;
+        }
+        table {
+            clear: both;
+            border: 1px solid darkgray;
+            border-collapse: collapse;
+            margin: auto;
+            width: 100%;
+        }
+
+        td, th {            
+            padding: 5px 10px;
+            text-align: center;
+            @* border: 2px solid white; *@
+            font-weight: 400;
+        }
+        th{
+            @* white-space: nowrap; *@
+            background-color: #ddd;
+        }
+        td{
+            @* border:none; *@
+            @* border-top: 1px dashed darkgray; *@
+            @* border-bottom: 1px dashed darkgray; *@
+            @* color: blue; *@
+        }
+        .breakhere { page-break-after: always }
+        th.h5{ 
+            padding-top: 15px;
+            padding-bottom: 10px;
+            font-size: 20px; 
+            font-weight: bold; 
+            border-bottom: 1px solid #000;
+        }
+        td.user-approve{
+            font-size: 11px;
+            color: #000;
+        }
+        .float-left{
+            float: left;
+        }
+        .mr-3{  margin-right: 10px; }
+        .text-primary{ color: blue; }
+        .text-info{ color: lightblue; }
+        .text-warning{ color: yellow; }
+        .text-danger { color: red; }
+        .text-success { color: green; }
+        .text-400{ color: #333; font-weight: 400; }
+        .text-bold{ font-weight: bold; }
+        .text-nowrap{ white-space: nowrap; }
+        .text-left{ text-align: left; }
+        .text-center{ text-align: center; }
+        .text-right{ text-align: right; }
+    </style>
+</head>
+    <body>
+        <table class="table table-bordered table-sm" border="1">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center text-nowrap">movie_code</th>
+                    <th class="text-center text-nowrap">title</th>
+                    <th class="text-center text-nowrap">category</th>
+                    <th class="text-center text-nowrap">detail</th>
+                    <th class="text-center text-nowrap">publish_start_date</th>
+                    <th class="text-center text-nowrap">publish_end_date</th>
+                    <th class="text-center text-nowrap">create_by</th>
+                    <th class="text-center text-nowrap">create_date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var (index, item) in Model.Select((item,i)=>(i,item)))
+                {
+                    <tr>
+                        <td class="text-center">@item.movie_code</td>
+                        <td class="text-center">@item.title</td>
+                        <td class="text-center">@item.category</td>
+                        <td class="text-center">@item.detail</td>
+                        <td class="text-center">@item.publish_start_date</td>
+                        <td class="text-center">@item.publish_end_date</td>
+                        <td class="text-center">@item.create_by</td>
+                        <td class="text-center text-nowrap">@Helper.DateTimeToString(item.create_date)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>
+</html>

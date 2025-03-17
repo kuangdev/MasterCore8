@@ -1,0 +1,214 @@
+@inject MasterCore8.Data.ApplicationDbContext _context;
+@{
+    Dictionary<string,string> doc_process_alert = new Dictionary<string,string>();
+    Dictionary<string,string> other_request_alert = new Dictionary<string,string>();
+    var sidebar = new List<SideItem>();
+
+    @* ============================= SET SIDEBAR MENU ==================================== *@
+    
+    sidebar.Add(new SideItem(){
+        Can = "", 
+        Icon = "bi bi-pie-chart-fill", Name = "Home DashBoard", 
+        Link = Url.Action("Index","Home"), Target = "",
+        Class = "", Onclick = "", 
+        Align = "Left", Badge = new BadgeStyle(){ },
+        SubMenu = new List<SideItem>(){
+        }
+    });
+
+    @* sidebar.Add(new SideItem(){
+        Can = "", 
+        Icon = "bi bi-file-earmark-text", Name = "Contract/Important Processing", 
+        Link = "#", Target = "",
+        Class = "", Onclick = "", 
+        Align = "Left", Badge = new BadgeStyle(){ },
+        SubMenu = new List<SideItem>(){
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-pencil-square", Name = "Deopsit Contract", 
+                Link = "#", Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-download", Name = "Deopsit Attachment", 
+                Link = "#", Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-clipboard", Name = "Other Request", 
+                Link = Url.Action("CreateMenu", "OtherRequest"), Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },
+        }
+    }); *@
+
+    sidebar.Add(new SideItem(){
+        Can = "", 
+        Icon = "bi bi-chat-left-text", Name = "Example", 
+        Link = "#", Target = "",
+        Class = "", Onclick = "", 
+        Align = "Left", Badge = new BadgeStyle(){ },
+        SubMenu = new List<SideItem>(){
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-chat-left-text", Name = "BasicCRUD", 
+                Link = Url.Action("Index","BasicCRUD"), Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-chat-left-text", Name = "AdvancedCRUD", 
+                Link = Url.Action("Index","AdvancedCRUD"), Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-person-badge", Name = "Student", 
+                Link = Url.Action("Index","Student"), Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-chat-left-text", Name = "HelperDoc", 
+                Link = Url.Action("Index","HelperDoc"), Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },            
+        }
+    });
+
+    sidebar.Add(new SideItem(){
+        Can = "", 
+        Icon = "bi bi-person-check-fill", Name = "Administrator", 
+        Link = "#", Target = "",
+        Class = "", Onclick = "", 
+        Align = "Left", Badge = new BadgeStyle(){ },
+        SubMenu = new List<SideItem>(){
+            new SideItem() {
+                Can = "", 
+                Icon = "bi bi-people-fill", Name = "Users", 
+                Link = Url.Action("Index","User"), Target = "",
+                Class = "", Onclick = "", 
+                Align = "Left", Badge = new BadgeStyle(){  },
+            },
+        }
+    });
+
+    @* ============================= SET SIDEBAR MENU ==================================== *@
+}
+
+
+
+<!-- Main Sidebar Container -->
+<aside id="main-sidebar" class="main-sidebar sidebar-light elevation-4">
+    <!-- Brand Logo -->
+    <div class="d-flex brand-link py-2 align-items-center active">
+        <a href="@Url.Action("Index","Home")" class="py-1">
+            <img src="@ViewBag.IconApp" alt="All Logo" class="brand-image img-circle elevation-3"
+                style="opacity: .8">
+        </a>
+        <b class="ml-1">
+            <a class="app-name" href="@Url.Action("Index","Home")">@ViewBag.AppName</a>
+        </b>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        @*<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+             <div class="image">
+                <img src="@ViewBag.UserImg" class="user-image img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a data-toggle="collapse" href="#user-info-detail" role="button" aria-expanded="false"
+                    aria-controls="user-info-detail" class="d-block">@User.Identity.Name</a>
+            </div>
+            <div class="collapse" id="user-info-detail">
+                <div class="text-center px-2">
+                    <a href="#" class="btn btn-outline-info btn-sm" title="ดูข้อมูล">
+                        <i class="bi bi-info-circle"></i> </a>
+                    <button class="btn btn-outline-warning btn-sm" onclick="$('#modal-resetpassword').modal('show')"
+                        type="button" title="Reset Password">
+                        <i class="bi bi-key"></i> </button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="$('#form-logout').submit();" type="button"
+                        title="Logout"> <i class="bi bi-box-arrow-right"></i> </button>
+                </div>
+            </div>
+        </div>*@
+
+        <!-- SidebarSearch Form -->
+
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            @* nav-flat nav-legacy *@
+            <ul class="nav nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">
+                @foreach (var item in sidebar)
+                {
+                    item.Icon =  string.IsNullOrEmpty(item.Icon) ? "bi bi-circle" : item.Icon;
+                    @if(item.Header != null){
+                        <li class="header">@item.Header</li>
+                    }else{                        
+                        <li class="nav-item" can="@item.Can" >
+                        <a href="@item.Link" class="nav-link @item.Class @item.Active @(item.SubMenu.Count > 0 ? "nav-parent" : "")" @Html.Raw(item.Target != null ? "target='"+item.Target+"'" : "") @Html.Raw(item.Target != null ? "target=\""+item.Target+"\"" : "")>
+                            <i class="nav-icon @item.Icon"></i>
+                            <p class="text-nowarp">
+                                <span>@item.Name</span>
+                                @if(item.Badge?.text != null){
+                                    <span class="badge badge-@item.Badge.color right">@item.Badge.text</span>
+                                }else{
+                                    <span></span>
+                                }
+                                @if(item.SubMenu.Count > 0){
+                                    <i class="bi bi-chevron-left right"></i>
+                                }
+                            </p>
+                        </a>
+                        @if(item.SubMenu.Count > 0){
+                            <ul class="nav nav-treeview" data-animationSpeed="100">
+                                @foreach(var subitem in item.SubMenu){
+                                    <li class="nav-item" can="@subitem.Can">
+                                        <a href="@subitem.Link" @Html.Raw(subitem.Target != null ? "target='"+subitem.Target+"'" : "") @Html.Raw(subitem.Target != null ? "target=\""+subitem.Target+"\"" : "") class="nav-link @subitem.Class @subitem.Active">
+                                            <i class="nav-icon sub-icon @(subitem.Icon != "" ? subitem.Icon : item.Icon)"></i>
+                                            <p class="text-nowarp">
+                                                <span>@subitem.Name</span>
+                                                @if (subitem.Badge?.text != null){
+                                                <span></span>
+                                                <span class="badge badge-@subitem.Badge.color right">@subitem.Badge.text</span>
+                                                }
+                                            </p>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                    }
+                }                
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+        <div class="mt-3">
+            <hr>
+            
+            <button class="btn btn-default text-left text-nowrap overflow-hidden w-100 btn-flat text-orange" onclick="$('#modal-resetpassword').modal('show');"> <i class="bi bi-key mr-2"></i> Change Password </button>
+            <button class="btn btn-default text-left text-nowrap overflow-hidden w-100 btn-flat" onclick="$('#form-logout').submit();"> <i class="bi bi-box-arrow-right mr-2"></i> Logout </button>
+        </div>
+    </div>
+    <!-- /.sidebar -->
+</aside>
+
+<style>
+    .user-panel img {
+        background: #fff;
+    }
+</style>
+<!-- Main Sidebar Container -->

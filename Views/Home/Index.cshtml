@@ -1,0 +1,50 @@
+﻿@inject MasterCore8.Data.ApplicationDbContext _context;
+@{
+    Layout = "AdminLTE/_Layout";
+    ViewData["Title"] = "HOME PAGE";
+    ViewData["MenuActive"] = new string[] { };
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "", Icon = "bi bi-house-door",
+            Link = @Url.Action("Index", "Home"), Name = "Dashboard",
+            Class = "", Target="", Active=true
+        }
+    };
+    Dictionary<string,string> doc_process_alert = new Dictionary<string,string>();
+    Dictionary<string,string> other_request_alert = new Dictionary<string,string>();
+     
+    
+}
+
+<div class="card-body">
+    
+    <h5 class="my-3"> Wellcome To Home Page</h5>
+    <p>User Data</p>
+    <pre>
+        empno : <span>@User.FindFirst("empno").Value</span>
+        name : <span>@User.FindFirst("name").Value</span>
+        email : <span>@User.FindFirst("email").Value</span>
+        ext : <span>@User.FindFirst("ext").Value</span>
+        dept : <span>@User.FindFirst("dept").Value</span>
+        div : <span>@User.FindFirst("div").Value</span>
+        position : <span>@User.FindFirst("position").Value</span>
+        status : <span>@User.FindFirst("status").Value</span>
+        roles : <span>@User.FindFirst("roles").Value</span>
+    </pre>
+    
+
+    
+</div>
+
+@section Scripts {
+    <script src="@Url.Content("~/js/chart.min.js")"></script>
+    <script>
+       
+    </script>
+}
+
+@section Styles {
+    <style>
+        
+    </style>
+}

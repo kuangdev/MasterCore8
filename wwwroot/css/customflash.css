@@ -1,0 +1,79 @@
+.btn-loading{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #6c757d;
+    padding-left: 1em;
+    display: flex;
+    align-items: center;
+    z-index: 1039;
+}
+.user-panel img {
+    height: 2.1rem;
+    width: 2.1rem;
+}
+
+.text-overflow-ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.content-header-left{
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.content-header-left .head-breadcrumb .breadcrumb-item+.breadcrumb-item::before{
+    float: none;
+}
+.content-header-left .head-breadcrumb .breadcrumb{
+    flex-wrap: nowrap;
+}
+
+.content-header-left::-webkit-scrollbar {
+    height: 5px;
+}
+
+.content-header-left::-webkit-scrollbar-track {
+    background-color: rgb(199, 199, 199);
+}
+
+.content-header-left::-webkit-scrollbar-thumb {
+    background: rgb(51, 51, 51);
+}
+
+.collapsed-card [data-card-widget="collapse"] > i.bi-dash-lg,[data-card-widget="collapse"] > i.bi-plus-lg{
+    display: none;
+}
+.collapsed-card [data-card-widget="collapse"] > i.bi-plus-lg{
+    display: initial;
+}
+/* .modal-primary .modal-header{
+    background-color: #007bff;
+}
+.modal-secondary .modal-header{
+    background-color: #6c757d;
+}
+.modal-success .modal-header{
+    background-color: #28a745;
+}
+.modal-danger .modal-header{
+    background-color: #dc3545;
+}
+.modal-warning .modal-header{
+    background-color: #ffc107;
+}
+.modal-info .modal-header{
+    background-color: #17a2b8;
+}
+.modal-light .modal-header{
+    background-color: #f8f9fa;
+}
+.modal-light .modal-header{
+    background-color: #343a40;
+} */
+

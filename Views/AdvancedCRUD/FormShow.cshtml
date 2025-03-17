@@ -1,0 +1,68 @@
+@model tbbasic_crud
+@{
+    Layout = null;
+    var lookup_category_list = ViewBag.lookup_category_list as List<tblookup>;
+    var lookup_category_list_dic = lookup_category_list.ToDictionary(l=>l.lookup_code, l=>l.lookup_code);
+}
+
+<div class="show-table-detail">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Movie Code</th>
+                <td colspan="3">@Model.movie_code</td> 
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>@Model.title</td>
+                <th>Category</th>
+                <td>@Helper.DictionaryValue(lookup_category_list_dic,Model.category)</td>
+            </tr>
+            <tr>
+                <th>Detail</th>
+                <td colspan="3">@Model.detail</td>
+            </tr>
+            <tr>
+                <th>Movie Img</th>
+                <td colspan="3">
+                    <img src="@Url.Content($"~/fileservice/fileUploads/{Model.img}")" alt="">
+                </td>
+            </tr>
+            <tr>
+                <th>Publish Date</th>
+                <td colspan="3">@Helper.DateToString(Model.publish_start_date,"th") - @Helper.DateToString(Model.publish_end_date,"th")</td>
+            </tr>
+            <tr>
+                <th>CreateBy</th>
+                <td>@Model.create?.name</td>
+                <th>CreateDate</th>
+                <td>@Helper.DateTimeToString(Model.create_date,"th")</td>
+            </tr>
+            <tr>
+                <th>UpdateBy</th>
+                <td>@Model.update?.name</td>
+                <th>UpdateDate</th>
+                <td>@Helper.DateTimeToString(Model.update_date,"th")</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .show-table-detail th,.show-table-detail td{
+        padding: 5px;
+    }
+    .show-table-detail th{
+        background-color: #e9ecef;
+        width: fit-content;
+        font-weight: 400;
+        width: 182px;
+        white-space: nowrap;
+    }
+    .show-table-detail td{
+        color: blue;
+        max-width: 400px;
+        min-width: 250px;
+        overflow-wrap: break-word;
+    } 
+</style>

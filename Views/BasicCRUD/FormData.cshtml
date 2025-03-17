@@ -1,0 +1,63 @@
+@model tbbasic_crud
+@{
+    Layout = null;
+    bool FormInline = false;
+    string formType = ViewBag.formType ?? Guid.NewGuid().ToString("N").Substring(0, 5);
+    var lookup_category_list = ViewBag.lookup_category_list as List<tblookup>;
+}
+
+<div id="form-@(formType)" class="row">
+    @if(Model.title != null){
+        <input type="hidden" name="id" value="@Model.id">
+        <formitem 
+            col = "col-md-12" type = "text" label = "Movie Code" show-label = "true" 
+            asp-for = "movie_code" id = "form-@(formType)-movie_code" Name = "movie_code" 
+            value = "@Model.movie_code" class = "" icon = ""  
+            inline = "FormInline" form-group = "true" required = "true" readonly="true" />
+    }
+
+    <formitem 
+        col = "col-md-4" type = "text" label = "Title" show-label = "true" 
+        asp-for = "title" id = "form-@(formType)-title" Name = "title" 
+        value = "@Model.title" class = "" icon = ""  
+        inline = "FormInline" form-group = "true" required = "true" />
+
+    <formitem 
+        col = "col-md-4" type = "select" label = "Category" show-label = "true" 
+        asp-for = "category" id = "form-@(formType)-category" Name = "category" 
+        value = "@Model.category" class = "" icon = ""  
+        inline = "FormInline" form-group = "true" required = "true" 
+        option = "lookup_category_list.ToDictionary(l=>l.lookup_code,l=>l.lookup_code)" />    
+
+    <formitem 
+        col = "col-md-4" type = "file" label = "Movie Img" show-label = "true" 
+        id = "form-@(formType)-fileupload" Name = "fileupload" 
+        value = "" class = "" icon = ""  
+        inline = "FormInline" form-group = "true" required = "false" 
+        accept="image/png, image/gif, image/jpeg" />
+
+    <formitem 
+        col = "col-md-6" type = "date" label = "Publish Form" show-label = "true" 
+        asp-for = "publish_start_date" id = "form-@(formType)-publish_start_date" Name = "publish_start_date" 
+        value = "@Model.publish_start_date" class = "" icon = ""  
+        inline = "FormInline" form-group = "true" required = "true" />
+
+    <formitem 
+        col = "col-md-6" type = "date" label = "To" show-label = "true" 
+        asp-for = "publish_end_date" id = "form-@(formType)-publish_end_date" Name = "publish_end_date" 
+        value = "@Model.publish_end_date" class = "" icon = ""  
+        inline = "FormInline" form-group = "true" required = "true" />
+
+    <formitem 
+        col = "col-md-12" type = "textarea" label = "Detail" show-label = "true" 
+        asp-for = "detail" id = "form-@(formType)-detail" Name = "detail" 
+        value = "@Model.detail" class = "" icon = ""  
+        inline = "false" form-group = "true" required = "false" />
+        
+</div>
+
+<style>
+    #form-@(formType) .form-item-inline {
+        min-width: 80px;
+    }
+</style>

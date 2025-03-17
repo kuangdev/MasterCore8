@@ -1,0 +1,513 @@
+@model List<AppUser>
+@{
+    Layout="AdminLTE/_Layout";
+    ViewData["Title"] = "Helper Doc";
+    ViewData["MenuActive"] = new string[]{ Url.Action("Index", "HelperDoc") };
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-house-door",
+            Link = Url.Action("Index", "Home"), Name = "Home",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-file-earmark-code",
+            Link = Url.Action("Index", "HelperDoc"), Name = "Helper Doc",
+            Class = "", Target="", Active=true
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-file-earmark-code",
+            Link = Url.Action("Index", "HelperDoc")+"#Blank-Page", Name = "Blank Page",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-file-earmark-code",
+            Link = Url.Action("Index", "HelperDoc")+"#Theme-Setting", Name = "Theme Setting",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-file-earmark-code",
+            Link = Url.Action("Index", "HelperDoc")+"#Tag-Helper", Name = "Tag Helper",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-file-earmark-code",
+            Link = Url.Action("Index", "HelperDoc")+"#js-Helper", Name = "js Helper",
+            Class = "", Target="", Active=false
+        }
+    };
+}
+
+
+<div id="Blank-Page" class="card " can="">
+    <div class="card-header ">
+        <h3 class="card-title"> <i class="bi bi-file-earmark-code"></i> Blank Page </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="text-center">
+            <img src="@Url.Content("~/images/MvcFlow.jpg")" style="max-width: 100%;" alt="">
+        </div>        
+        <b>Blank Page</b>
+        <pre>
+            @@{
+                Layout="AdminLTE/_Layout";
+                ViewData["Title"] = "Blank Page";
+                ViewData["MenuActive"] = new string[]{ Url.Action("Index", "Home") };
+                ViewData["Breadcrumb"] = new List&lt;Breadcrumb&gt;(){
+                    new Breadcrumb{
+                        Can = "",  Icon = "bi bi-house-door",
+                        Link = @@Url.Action("Index", "Home"), Name = "Home",
+                        Class = "", Target="", Active=false
+                    },
+                    new Breadcrumb{
+                        Can = "",  Icon = "bi bi-file-earmark",
+                        Link = @@Url.Action("Index", "Home"), Name = "Blank Page",
+                        Class = "", Target="", Active=true
+                    }
+                };
+
+            }
+
+            &lt;div class="card card-primary card-outline " can=""&gt;
+                &lt;div class="card-header "&gt;
+                    &lt;h3 class="card-title"&gt; &lt;i class="bi bi-file-earmark"&gt;&lt;/i&gt; Blank Page &lt;/h3&gt;
+                    &lt;div class="card-tools"&gt;
+                        &lt;button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse"&gt;
+                            &lt;i class="bi bi-dash-lg"&gt;&lt;/i&gt;
+                            &lt;i class="bi bi-plus-lg"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="card-body"&gt; 
+                    ....
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+
+            @@section Scripts {
+                &lt;script&gt;
+                &lt;/script&gt;
+            }
+
+
+            @@section Styles {
+                &lt;style&gt;
+                &lt;/style&gt;
+            }
+            
+        </pre>
+
+    </div>
+</div>
+
+<div id="Theme-Setting" class="card card-success " can="">
+    <div class="card-header ">
+        <h3 class="card-title"> <i class="bi bi-file-earmark-code"></i> Theme </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">        
+        <b>Theme Setting</b>
+        <pre>
+            <span class="text-danger">*** โครงสรา้ง View Theme ***</span>
+            - ใช้ Adminlte v3 มาดัดแปลง
+            - Bootstrap v.4.6.x
+            - Icon -> bootstrap icon
+            ========== Package ที่ใช้งาน Theme ===========
+            "@@popperjs/core": "^2.11.5",
+            "admin-lte": "^3.2.0",
+            "axios": "^0.27.2",
+            "bootstrap-icons": "^1.8.3",
+            "chart.js": "^3.8.0",
+            "datatables.net": "^1.12.1",
+            "datatables.net-bs": "^1.12.1",
+            "flatpickr": "^4.6.13",
+            "floatthead": "^2.2.4",
+            "font-awesome": "^4.7.0",
+            "glightbox": "^3.2.0",
+            "inputmask": "^5.0.7",
+            "jquery": "^3.6.0",
+            "jquery-ajax-unobtrusive": "^3.2.6",
+            "jquery-equal-height": "^1.0.4",
+            "jquery-validation": "^1.19.4",
+            "jquery-validation-unobtrusive": "^3.2.12",
+            "lodash": "^4.17.21",
+            "moment": "^2.29.3",
+            "select2": "^4.1.0-rc.0",
+            "signature_pad": "^4.0.5",
+            "sortablejs": "^1.15.0",
+            "sweetalert2": "^11.4.17",
+            "underscore": "^1.13.4",
+            "vue": "^3.2.37"
+
+            <span class="text-danger">** Setting หลังๆของ Layout </span>
+            - Views\Shared\AdminLTE\_Layout.cshtml
+                - แก้ไข สีของ Theme
+                - แก้ไขข้อมูล Layout ต่างๆ
+            - Views\Shared\AdminLTE\_Navbar.cshtml
+                - แก้ไข Layout ของ Navbar
+            - Views\Shared\AdminLTE\_Sidebar.cshtml
+                - แก้ไข หรือ เพิ่ม Sidebar Menu
+                 === ตัวอย่างการเพิ่มเมนู แบบ ไม่มี Dropdown Sub ===
+                sidebar.Add(new SideItem(){
+                    Can = "", 
+                    Icon = "bi bi-pie-chart-fill", Name = "Home DashBoard", 
+                    Link = Url.Action("Index","Home"), Target = "",
+                    Class = "", Onclick = "", 
+                    Align = "Left", Badge = new BadgeStyle(){ },
+                    SubMenu = new List<SideItem>(){
+                    }
+                });
+
+                 === ตัวอย่างการเพิ่มเมนู แบบ มี Dropdown Sub ===
+                sidebar.Add(new SideItem(){
+                    Can = "", 
+                    Icon = "bi bi-chat-left-text", Name = "Example", 
+                    Link = "#", Target = "",
+                    Class = "", Onclick = "", 
+                    Align = "Left", Badge = new BadgeStyle(){ },
+                    SubMenu = new List<SideItem>(){
+                        new SideItem() {
+                            Can = "", 
+                            Icon = "bi bi-chat-left-text", Name = "BasicCRUD", 
+                            Link = Url.Action("Index","BasicCRUD"), Target = "",
+                            Class = "", Onclick = "", 
+                            Align = "Left", Badge = new BadgeStyle(){  },
+                        },
+                        new SideItem() {
+                            Can = "", 
+                            Icon = "bi bi-chat-left-text", Name = "HelperDoc", 
+                            Link = Url.Action("Index","HelperDoc"), Target = "",
+                            Class = "", Onclick = "", 
+                            Align = "Left", Badge = new BadgeStyle(){  },
+                        },            
+                    }
+                });
+            
+        </pre>
+
+    </div>
+</div>
+
+<div id="Tag-Helper" class="card card-info " can="">
+    <div class="card-header ">
+        <h3 class="card-title"> <i class="bi bi-file-earmark-code"></i> Tag Helper -> Helpers\TagHelpers\FormItemTagHelper.cs </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">        
+        <b>TagHelper Tag formitem</b>
+        <pre>
+            // ========= type List ==============
+            date,datetime, month, time,daterange, file, textarea, editor, checkbox, switch, radio, select, signature, autocomplete
+            <span class="text-danger">** ตัวอย่างการใช้งาน ประเภททั้วไป ที่ไม่มี option</span>
+            <span class="text-danger">** asp-for = "StartDate" คือมีการรับคุณสมบัติจาก Model 
+                ระบบจะได้คุณสมบัติการ Validation จาก Model มาด้วย 
+                ถ้าไม่มีให้ลบ Attribute asp-for ออกได้เลย</span>
+            &lt;formitem 
+                col = "col-md-12" type = "text" label = "Title" show-label = "true" 
+                asp-for = "title" id = "form-input-title" Name = "title" 
+                value = "@@Model.title" class = "" icon = ""  
+                inline = "false" form-group = "true" required = "false" /&gt;
+
+            &lt;formitem 
+                col = "col-md-12" type = "date" label = "StartDate" show-label = "true" 
+                asp-for = "start_date" id = "form-input-start_date" Name = "start_date" 
+                value = "@@Model.start_date" class = "" icon = ""  
+                inline = "false" form-group = "true" required = "false" /&gt;
+
+            <span class="text-danger">** ตัวอย่างการใช้งาน ประเภท ([select, radio]) ที่มี option   </span>
+            &lt;formitem 
+                col = "col-md-12" type = "select" label = "Category" show-label = "true" 
+                asp-for = "category" id = "form-@@(formType)-category" Name = "category" 
+                value = "@@Model.category" class = "" icon = ""  
+                inline = "false" form-group = "true" required = "false" 
+                option = "dictionary_dic_lookup_list" /&gt;
+
+            <span class="text-danger">** ตัวอย่างการใช้งาน ประเภท ([select, radio]) ที่มี option และต้องการระบบ Attribute เพื่มใน item  </span>
+            &lt;formitem 
+                col = "col-md-12" type = "select" label = "Category" show-label = "true" 
+                asp-for = "category" id = "form-@@(formType)-category" Name = "category" 
+                value = "@@Model.category" class = "" icon = ""  
+                inline = "false" form-group = "true" required = "false" 
+                option = "dictionary_dic_lookup_list" optionattr = "dictionary_attr_list" /&gt;
+
+            <span class="text-danger">** Attribute option และ optionattr จะรับ data เป็น  Dictionary&lt;string,string&gt;() ที่ Key ไม่ซ้ำกัน </span>
+            ================================================================
+
+
+
+        </pre>
+            <h4>*** ตัวอย่าง ***</h4>
+
+            @{
+                var dic_options = new Dictionary<string,string>();
+                for (int i = 0; i < 20; i++)
+                {                    
+                    dic_options.Add("key0"+i, "display0"+i);
+                }
+                var type_list = new string[]{ "date","datetime", "month", "time","daterange", "file", "textarea", "editor", "select", "signature", "autocomplete" };
+                var type_list2 = new string[]{ "checkbox", "switch", "radio" };
+            }
+            <div class="row">
+                @foreach (var item in type_list)
+                {
+                    @if(item == "select"){
+                        <formitem 
+                            col = "col-md-6" type = "@item" label = "formitem_type_@item" show-label = "true" 
+                            id = "form-input-@item" Name = "@item" 
+                            value = "" class = "" icon = ""  
+                            inline = "false" form-group = "true" required = "false" 
+                            option="dic_options" />
+                    }else if (item == "autocomplete"){
+                        <formitem 
+                            col = "col-md-6" type = "@item" label = "formitem_type_@item" show-label = "true" 
+                            id = "form-input-@item" Name = "@item" 
+                            value = "" class = "" icon = ""  
+                            inline = "false" form-group = "true" required = "false"
+                            data-prefetch="@Url.Action("ApiAutocomplete","HelperDoc")" />
+                    }else if ((new string[]{"editor", "signature"}).Contains(item)){
+                        <formitem 
+                            col = "col-md-12" type = "@item" label = "formitem_type_@item" show-label = "true" 
+                            id = "form-input-@item" Name = "@item" 
+                            value = "" class = "" icon = ""  
+                            inline = "false" form-group = "true" required = "false" Width = "400" Height = "300" />
+                    }else{
+                        <formitem 
+                            col = "col-md-6" type = "@item" label = "formitem_type_@item" show-label = "true" 
+                            id = "form-input-@item" Name = "@item" 
+                            value = "" class = "" icon = ""  
+                            inline = "false" form-group = "true" required = "false" />
+                    }
+                }
+
+                <div class="col-md-12">
+                    @foreach (var item in type_list2)
+                    {
+                        @if (item == "radio"){
+                            
+                            <formitem 
+                                col = "" type = "@item" label = "formitem_type_@item" show-label = "true" 
+                                id = "form-input-@item" Name = "@item" 
+                                value = "" class = "" icon = ""  
+                                inline = "true" form-group = "false" required = "false" 
+                                option="dic_options" />
+                            
+                        
+                        }else if ((new string[]{"checkbox", "switch"}).Contains(item)){
+                            
+                            <formitem 
+                                col = "" type = "@item" label = "formitem_type_@item" show-label = "true" 
+                                id = "form-input-@item" Name = "@item" 
+                                value = "" class = "" icon = ""  
+                                inline = "true" form-group = "false" required = "false" />
+                            
+                        }
+                    }
+                </div>
+            </div>
+
+    </div>
+</div>
+
+
+<div id="js-Helper" class="card card-warning " can="">
+    <div class="card-header ">
+        <h3 class="card-title"> <i class="bi bi-file-earmark-code"></i> js Helper -> Resources\js\helpers.js </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <b>componentAjaxView(options, _callback,_onerrors)</b>
+        <div class="text-center">
+            <img src="@Url.Content("~/images/ComponentViewAjax.jpg")" style="max-width: 100%;" alt="">
+        </div>
+        <pre>
+            <span class="text-danger">** ใช่ในการ โหลดหรือ ดึงหน้าเว็บ โดยใช้ Ajax</span>
+            - options 
+                -- id = เช่น "table-data"
+                -- url = เช่น "@@Url.Action("TableBasicCRUD","BasicCRUD")"
+                -- query = เช่น "?id=1234&name=1234" หรือ "@@Context.Request.GetDisplayUrl()" ส่งต่อ query string ไปทั้งหมด
+                -- method = [ "get", "post" ]
+                -- page = หมายเลขหน้า กรณีเป็นข้อมูลที่มีการเปลี่ยนหน้า
+                -- updated = Function Callback เมื่อ Function ทำงานสำเร็จ!
+                -- errors = Function Callback เมื่อ Function ทำงาน Error!
+            - _callback = Function Callback เมื่อ Function ทำงานสำเร็จ!
+            - _onerrors = Function Callback เมื่อ Function ทำงาน Error!
+
+            <span class="text-danger">** ตัวอย่างการใช้งาน ผ่าน Class formAjax และ Attribute Html **</span>
+                &lt;div id="table-data"
+                    data-url="@@Url.Action("TableBasicCRUD","BasicCRUD")"
+                    data-query="@@Context.Request.GetDisplayUrl()"
+                    data-page=""
+                    data-updated="tableUpdate" class="componentAjaxView"&gt;
+                &lt;/div&gt;
+            <span class="text-danger">** create script updated function</span>
+            function tableUpdate (res){
+                console.log(res);
+            }            
+
+            <span class="text-danger">** ตัวอย่างการเรียกใช้ function แบบง่ายๆ **</span>
+            &lt;div id="show-data"&gt;&lt;/div&gt;
+            $("#show-data").componentAjaxView({ url: "@@Url.Action("FormData","BasicCRUD")" } });
+            หรือ
+            $("#show-data").componentAjaxView({ url: "@@Url.Action("FormData","BasicCRUD")", updated:function(res){ console.log(res) } });
+            
+        </pre>
+
+        <b>formAjax(options, _callback, _onerrors)</b>
+        <pre>
+            <span class="text-danger">** ใช่ในการ ทำ form ให้ส่ง Data แบบ Ajax </span>
+            - options 
+                -- id = เช่น "table-data"
+                -- url = เช่น "@@Url.Action("TableBasicCRUD","BasicCRUD")"
+                -- method = [ "get", "post" ]
+                -- updated = Function Callback เมื่อ Function ทำงานสำเร็จ!
+                -- errors = Function Callback เมื่อ Function ทำงาน Error!
+            - _callback = Function Callback เมื่อ Function ทำงานสำเร็จ!
+            - _onerrors = Function Callback เมื่อ Function ทำงาน Error!
+
+            <span class="text-danger">** ตัวอย่างการใช้งาน ผ่าน Class formAjax และ Attribute Html **</span>
+                &lt;form id="form-send-data" action="@@Url.Action("Update","BasicCRUD")" class="formAjax" updated="formSendDataUpdated"&gt;
+                    &lt;div class="d-flex justify-content-between" style="gap: 20px;"&gt;
+                        &lt;input type="text" name="Email" class="form-control" placeholder="Email"&gt;
+                        &lt;input type="text" name="Title" class="form-control" placeholder="Title"&gt;
+                        &lt;input type="text" name="Detail" class="form-control" placeholder="Detail"&gt;
+                        &lt;button type="submit" class="btn btn-primary"&gt; SendEmail &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt;
+            <span class="text-danger">** create script updated function * ถ้าระบบทำงานเสร็จแล้วจะ ส่งค่ากลับมาที่ formSendDataUpdated(resault) *</span>
+            function formSendDataUpdated (res){
+                console.log(res);
+                alertBox2("success","แก้ไขข้อมูลสำเร็จ");
+            }  
+            
+        </pre>
+        <b>floatTheadReset()</b>
+        <pre>
+            * resize table flex thead --> class <b style="color:red">.float-thead</b>
+        </pre>
+
+        <b>_helper.init()</b>
+        <pre>
+            * initial helper js
+        </pre>
+
+        <b>_helper.updateInint(element)</b>
+        <pre>
+            * ทำการ run lib input class [.datepicker, .datetimepicker, .daterangepicker, .timepicker, .monthpicker, .datatable-full, .datatable, .float-thead]
+            = element = tag html เช่น body, #modal-content .div-form-data
+        </pre>
+
+        <b>_helper.startLoading(element)</b>
+        <pre>
+            * แสดง loading ใน element ที่กำหนด!
+            = element = tag html เช่น body, #modal-content, .div-form-data
+        </pre>
+
+        <b>_helper.loading(element)</b>
+        <pre>
+            * แสดง loading ใน element ที่กำหนด!
+            = element = tag html เช่น body, #modal-content, .div-form-data
+        </pre>
+
+
+        <b>_helper.stopLoading(element)</b>
+        <pre>
+            * หยุดแสดง loading ใน element ที่กำหนด!
+            = element = tag html เช่น body, #modal-content, .div-form-data
+        </pre>
+
+        
+        <b>Class .form-loading</b>
+        <pre>
+
+            ** ตัวอย่างการใช้งาน **
+                &lt;form id="form-send-data" action="@@Url.Action("Update","BasicCRUD")" class="form-loading"&gt;
+                    &lt;div class="d-flex justify-content-between" style="gap: 20px;"&gt;
+                        &lt;input type="text" name="Email" class="form-control" placeholder="Email"&gt;
+                        &lt;input type="text" name="Title" class="form-control" placeholder="Title"&gt;
+                        &lt;input type="text" name="Detail" class="form-control" placeholder="Detail"&gt;
+                        &lt;button type="submit" class="btn btn-primary"&gt; SendEmail &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt; 
+            <span class="text-danger">** เมื่อทำการ submit จะมี Loading แสดงที่หน้าจอ</span>
+        </pre>
+
+
+        <b>_helper.numberFormat(num,digis)</b>
+        <pre>
+            * แสดงทศนิยมตัวเลข 
+        </pre>
+
+
+        <b>_helper.popup(url, name, _w, _h)</b>
+        <pre>
+            * แสดง popup 
+            - url = Url Popup
+            - name = name Popup
+            - _w =  width
+            - _h = height
+        </pre>
+
+
+        <b>_helper.popupPost(actionUrl, windowName, windowFeatures, keyParams, valueParams, _w, _h)</b>
+        <pre>
+            * แสดง popup 
+            - actionUrl = Url Popup
+            - windowName = name Popup
+            - windowFeatures =  " width=,height= top=, left= "
+            - keyParams = key type array เช่น [ "key1","key2",... ]
+            - valueParams = value type array เช่น [ "value1","value2",... ]
+            - _w = width
+            - _h = height
+        </pre>
+
+        <b>alertBox(status, message)</b>
+        <pre>
+            * แสดง message box Toast 
+            - status = [ "info", "warning", "danger", "success", "error", "question" ]
+            - message = ข้อความแจ้งเตือน
+        </pre>
+
+        <b>alertBox2(status, message, title, subtitle, delay)</b>
+        <pre>
+            * แสดง message box Toast
+            - status = [ "info", "warning", "danger", "success", "error", "question" ]
+            - message = ข้อความแจ้งเตือน
+            - title =  title
+            - subtitle = subtitle
+            - delay =  delay ในการแสดงก่อนที่จะหายไป
+        </pre>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        signaturePadResize();
+    </script>
+}
+
+
+@section Styles {
+    <style>
+    </style>
+}

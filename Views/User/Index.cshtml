@@ -1,0 +1,198 @@
+@model List<AppUser>
+@{
+    Layout="AdminLTE/_Layout";
+    ViewData["Title"] = "Manage User";
+    ViewData["MenuActive"] = new string[]{ "" };
+    ViewData["Breadcrumb"] = new List<Breadcrumb>(){
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-house-door",
+            Link = @Url.Action("Index", "Home"), Name = "Home",
+            Class = "", Target="", Active=false
+        },
+        new Breadcrumb{
+            Can = "",  Icon = "bi bi-person",
+            Link = @Url.Action("Index", "Doc"), Name = "Users",
+            Class = "", Target="", Active=true
+        }
+    };
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-block d-md-flex align-items-center">            
+            <div class="mb-2 text-right mr-2">                
+                <a data-ajax="true" 
+                data-ajax-url="@Url.Action("Create","User")" 
+                data-ajax-update="#modal-create-body" 
+                onclick="$('#modal-create').modal('show');" class="btn btn-secondary" style="height: 38px;"> 
+                    <i class="bi bi-plus-lg"></i> Add 
+                </a>
+            </div>
+            <div class="flex-fill mb-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">ค้นหา</span>
+                    </div>
+                    <input id="input-search" class="form-control" type="text" name="" placeholder="ค้นหา">
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="table-data" class="table table-bordered table-striped table-sm">
+                <thead class="thead">
+                    <tr>
+                        <th>#</th>
+                        <th>Emp No</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Divsion</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Ext</th>
+                        <th>Status</th>
+                        <th>Role</th>
+                        <th style="width: 40px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (item, i) in Model.Select((v, i) => (v, i)))
+                    {
+                        <tr>
+                            <td>@(i+1)</td>
+                            <td>@item.empno</td>
+                            <td>@item.name</td>
+                            <td>@item.position</td>
+                            <td>@item.div</td>
+                            <td>@item.dept_full</td>
+                            <td>@item.email</td>
+                            <td>@item.ext</td>
+                            <td>@item.status</td>
+                            <td>@item.roles</td>
+                            <td class="text-center text-nowrap">
+                                <button class="btn btn-primary btn-xs" onclick="getModalEdit('@item.id')" type="button"> <i class="bi bi-pencil-square"></i> </button>
+                                <button class="btn btn-danger btn-xs" onclick="getModalDelete('@item.id')" type="button"> <i class="bi bi-trash"></i> </button>
+                            </td>
+                        </tr>
+                        
+                    }
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<form id="form-modal-create" method="post" action="@Url.Action("Store","User")" class="form-loading">
+    <div id="modal-create" class="modal fade" role="dialog" aria-labelledby="modal-create-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-create-title">Add User</h5>
+                    <a href="javascript:void(0)" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div id="modal-create-body" class="modal-body">
+                    <p>Content</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit"> <i class="bi bi-save"></i> Save </button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-label="Close" type="button"> <i class="bi bi-box-arrow-left"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form id="form-modal-edit" method="post" action="@Url.Action("Edit","User",null)" class="form-loading">
+    <div id="modal-edit" class="modal fade" role="dialog" aria-labelledby="modal-edit-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-edit-title">Edit User</h5>
+                    <a href="javascript:void(0)" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div id="modal-edit-body" class="modal-body">
+                    <p>Content</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit"> <i class="bi bi-save"></i> Save </button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-label="Close" type="button"> <i class="bi bi-box-arrow-left"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form id="form-modal-delete" method="post" action="@Url.Action("Delete","User",null)" class="form-loading">
+    <div id="modal-delete" class="modal fade" role="dialog" aria-labelledby="modal-delete-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-delete-title">Delete User</h5>
+                    <a href="javascript:void(0)" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div id="modal-delete-body" class="modal-body">
+                    <p>Content</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="submit"> <i class="bi bi-trash3"></i> Confirm Delete User </button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-label="Close" type="button"> <i class="bi bi-box-arrow-left"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+         
+        let xoTable = $('#table-data').DataTable({
+            "lengthChange": false,
+            "pageLength": 50,
+            "language": {
+                search: "ค้นหา",
+                searchPlaceholder: "ค้นหา"
+            }
+        })
+        $('#input-search').keyup(function(){
+            xoTable.search($(this).val()).draw() ;
+        });
+
+        function getModalEdit(id){
+            $('#form-modal-edit').attr("action", `@Url.Action("Update", "User")?id=${id}`);
+            $('#modal-edit-body').componentAjaxView({ 
+                url:  `@Url.Action("Edit", "User")?id=${id}`,
+                updated: function (){
+                    $('#form-edit-empno').prop("readonly",true)
+                }
+            });
+            $('#modal-edit').modal("show");
+        }
+        function getModalDelete(id){
+            $('#form-modal-delete').attr("action", `@Url.Action("Delete", "User")?id=${id}`);
+            $('#modal-delete-body').componentAjaxView({ 
+                url:  `@Url.Action("Edit", "User")?id=${id}`,
+                updated: function (){
+                    $('#form-modal-delete input,#form-modal-delete select').prop("disabled",true)
+                }
+            });
+            
+            $('#modal-delete').modal("show");
+        }
+        
+    </script>
+}
+
+
+@section Styles {
+    <style>
+        div.table-responsive>div.dataTables_wrapper>div.row:first-child{
+            display: none;
+        }
+    </style>
+}
